@@ -1,0 +1,257 @@
+body{
+	margin: 0;
+	background: url(../img/indexBG.jpg) no-repeat;
+	background-size: 100% 100%;
+}
+
+#top{
+	height: 100px;
+	line-height: 100px;
+	margin-top: 50px;
+	padding: 0px;
+}
+
+#logo-img{
+	color: darkgoldenrod;
+	font-size: 50px;
+}
+
+#sytemName{
+	font-size: 24px;
+	color: white;
+	margin-left: 10px;
+}
+
+#top-navigation{
+	width: 400px;
+	height: 100%;
+	float: right;
+}
+
+.top-navigation-a{
+	color: powderblue;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.top-navigation-p{
+	color: powderblue;
+	font-weight: bold;
+	font-size: 24px;
+	display: inline;
+}
+
+#top-navigation-name{
+	width: 180px;
+	height: 100%;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	float: left;
+	
+}
+
+.avatar-div-div a{
+	font-size: 16px;
+	margin-left: 15px;
+}
+
+.avatar-div{
+	float: right;
+	margin-right: 50px;
+	position: relative;
+}
+
+#avatar{
+	padding: 0px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.avatar-div-div{
+	padding-top: 20px;
+	line-height: 30px;
+	text-align: center;
+	width: 80px;
+	height: 150px;
+	background-color: white;
+	position: absolute;
+	top: 86px;
+	left: -12px;
+	z-index:100;
+	border: 1px solid white;
+	border-radius: 20%;
+	display: none;
+}
+
+.avatar-div-div:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent; /*调整小三角形的大小*/
+    border-bottom-color: white;/*改变小三角的颜色（最好就是和父级div的背景颜色相同）;bottom是用于调整小三角的方向*/
+    position: absolute;
+    left: 28px;/*调整小三角形的位置*/
+    bottom: 100%;/*调整小三角形的位置*/
+    margin-top: 20px;/*调整小三角形的位置*/
+    
+}
+
+.userName{
+	width: 64px;
+	font-size: 15px;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: auto;
+}
+
+#center{
+	background-color: white;
+	margin: auto;
+	padding: 20px;
+	padding-top: 30px;
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+.title{
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.records-div{
+	line-height: 100px;
+	text-align: center;
+	padding: 5px;
+	margin-bottom: 30px;
+}
+
+.records-div-div1{
+	width: 8%;
+	float: left;
+}
+
+.records-div-div2{
+	width: 15%;
+	float: left;
+}
+
+.records-div-div2-div{
+	width: 100%;
+	float: left;
+}
+
+.records-div-div2-img{
+	width: 100%;
+	height: 100px;
+	float: left;
+}
+
+.records-div-div3{
+	width: 20%;
+	padding-left: 15px;
+	padding-right: 15px;
+	float: left;
+}
+
+.records-div-div3-div{
+	white-space: nowrap;
+	overflow-x:auto;
+	height: 100px;
+}
+
+.records-div-div4{
+	width: 10%;
+	float: left;
+}
+
+.records-div-div5{
+	width: 12%;
+	float: left;
+}
+
+.records-div-div6{
+	width: 10%;
+	float: left;
+}
+
+.records-div-div6-div{
+	width: 100%;
+	white-space: nowrap;
+	overflow-x:auto;
+	height: 100px;
+	padding-left: 5px;
+	padding-right: 5px;
+	float: left;
+	
+}
+
+.records-div-div7{
+	width: 12%;
+	float: left;
+}
+
+.records-div-div7-div{
+	width: 100%;
+	white-space: nowrap;
+	overflow-x:auto;
+	height: 100px;
+	padding-left: 5px;
+	padding-right: 5px;
+	float: left;
+}
+
+.records-div-div8{
+	width: 13%;
+	float: left;
+}
+
+
+
+/**提示框**/
+.promptBox-background{
+	position:fixed;
+	z-index:9998;
+	top:0;
+	right:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,.2);
+	display:none;
+}
+
+.promptBox{
+	width:520px;
+	margin:auto;
+	padding:10px;
+	margin-top:10%;
+	background-color:white;
+	border:1px solid #bfbfbf;
+	box-shadow:0 0 10px rgba(0,0,0,.3);
+}
+
+.promptBox-title{
+	padding:10px;
+	text-align:center;
+	line-height: 20px;
+	border-bottom:1px solid gainsboro;
+}
+
+.promptBox-close{
+	font-size: 20px;
+	color: #999;
+	float: right;
+}
+
+.promptBox-text{
+	padding:40px;
+	font-size:14px;
+}
+
+/****/

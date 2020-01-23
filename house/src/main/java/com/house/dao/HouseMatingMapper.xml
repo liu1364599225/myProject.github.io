@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.HouseMatingMapper">
+  <resultMap id="BaseResultMap" type="com.house.entity.HouseMating">
+    <id column="houseMating_id" jdbcType="INTEGER" property="housematingId" />
+    <result column="houseMating_bed" jdbcType="CHAR" property="housematingBed" />
+    <result column="houseMating_washer" jdbcType="CHAR" property="housematingWasher" />
+    <result column="houseMating_airConditioner" jdbcType="CHAR" property="housematingAirconditioner" />
+    <result column="houseMating_balcony" jdbcType="CHAR" property="housematingBalcony" />
+    <result column="houseMating_refrigerator" jdbcType="CHAR" property="housematingRefrigerator" />
+    <result column="houseMating_toilet" jdbcType="CHAR" property="housematingToilet" />
+    <result column="houseMating_cookhouse" jdbcType="CHAR" property="housematingCookhouse" />
+    <result column="houseMating_television" jdbcType="CHAR" property="housematingTelevision" />
+    <result column="houseMating_waterHeater" jdbcType="CHAR" property="housematingWaterheater" />
+    <result column="houseMating_closet" jdbcType="CHAR" property="housematingCloset" />
+    <result column="houseMating_wifi" jdbcType="CHAR" property="housematingWifi" />
+    <result column="houseMating_sofa" jdbcType="CHAR" property="housematingSofa" />
+    <result column="housing_id" jdbcType="INTEGER" property="housingId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    houseMating_id, houseMating_bed, houseMating_washer, houseMating_airConditioner, 
+    houseMating_balcony, houseMating_refrigerator, houseMating_toilet, houseMating_cookhouse, 
+    houseMating_television, houseMating_waterHeater, houseMating_closet, houseMating_wifi, 
+    houseMating_sofa, housing_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housemating
+    where houseMating_id = #{housematingId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByHousingId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housemating
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from housemating
+    where houseMating_id = #{housematingId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.HouseMating">
+    insert into housemating (houseMating_id, houseMating_bed, houseMating_washer, 
+      houseMating_airConditioner, houseMating_balcony, 
+      houseMating_refrigerator, houseMating_toilet, houseMating_cookhouse, 
+      houseMating_television, houseMating_waterHeater, 
+      houseMating_closet, houseMating_wifi, houseMating_sofa, 
+      housing_id)
+    values (#{housematingId,jdbcType=INTEGER}, #{housematingBed,jdbcType=CHAR}, #{housematingWasher,jdbcType=CHAR}, 
+      #{housematingAirconditioner,jdbcType=CHAR}, #{housematingBalcony,jdbcType=CHAR}, 
+      #{housematingRefrigerator,jdbcType=CHAR}, #{housematingToilet,jdbcType=CHAR}, #{housematingCookhouse,jdbcType=CHAR}, 
+      #{housematingTelevision,jdbcType=CHAR}, #{housematingWaterheater,jdbcType=CHAR}, 
+      #{housematingCloset,jdbcType=CHAR}, #{housematingWifi,jdbcType=CHAR}, #{housematingSofa,jdbcType=CHAR}, 
+      #{housingId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.house.entity.HouseMating">
+    insert into housemating
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="housematingId != null">
+        houseMating_id,
+      </if>
+      <if test="housematingBed != null">
+        houseMating_bed,
+      </if>
+      <if test="housematingWasher != null">
+        houseMating_washer,
+      </if>
+      <if test="housematingAirconditioner != null">
+        houseMating_airConditioner,
+      </if>
+      <if test="housematingBalcony != null">
+        houseMating_balcony,
+      </if>
+      <if test="housematingRefrigerator != null">
+        houseMating_refrigerator,
+      </if>
+      <if test="housematingToilet != null">
+        houseMating_toilet,
+      </if>
+      <if test="housematingCookhouse != null">
+        houseMating_cookhouse,
+      </if>
+      <if test="housematingTelevision != null">
+        houseMating_television,
+      </if>
+      <if test="housematingWaterheater != null">
+        houseMating_waterHeater,
+      </if>
+      <if test="housematingCloset != null">
+        houseMating_closet,
+      </if>
+      <if test="housematingWifi != null">
+        houseMating_wifi,
+      </if>
+      <if test="housematingSofa != null">
+        houseMating_sofa,
+      </if>
+      <if test="housingId != null">
+        housing_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="housematingId != null">
+        #{housematingId,jdbcType=INTEGER},
+      </if>
+      <if test="housematingBed != null">
+        #{housematingBed,jdbcType=CHAR},
+      </if>
+      <if test="housematingWasher != null">
+        #{housematingWasher,jdbcType=CHAR},
+      </if>
+      <if test="housematingAirconditioner != null">
+        #{housematingAirconditioner,jdbcType=CHAR},
+      </if>
+      <if test="housematingBalcony != null">
+        #{housematingBalcony,jdbcType=CHAR},
+      </if>
+      <if test="housematingRefrigerator != null">
+        #{housematingRefrigerator,jdbcType=CHAR},
+      </if>
+      <if test="housematingToilet != null">
+        #{housematingToilet,jdbcType=CHAR},
+      </if>
+      <if test="housematingCookhouse != null">
+        #{housematingCookhouse,jdbcType=CHAR},
+      </if>
+      <if test="housematingTelevision != null">
+        #{housematingTelevision,jdbcType=CHAR},
+      </if>
+      <if test="housematingWaterheater != null">
+        #{housematingWaterheater,jdbcType=CHAR},
+      </if>
+      <if test="housematingCloset != null">
+        #{housematingCloset,jdbcType=CHAR},
+      </if>
+      <if test="housematingWifi != null">
+        #{housematingWifi,jdbcType=CHAR},
+      </if>
+      <if test="housematingSofa != null">
+        #{housematingSofa,jdbcType=CHAR},
+      </if>
+      <if test="housingId != null">
+        #{housingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.HouseMating">
+    update housemating
+    set houseMating_bed = #{housematingBed,jdbcType=CHAR},
+      houseMating_washer = #{housematingWasher,jdbcType=CHAR},
+      houseMating_airConditioner = #{housematingAirconditioner,jdbcType=CHAR},
+      houseMating_balcony = #{housematingBalcony,jdbcType=CHAR},
+      houseMating_refrigerator = #{housematingRefrigerator,jdbcType=CHAR},
+      houseMating_toilet = #{housematingToilet,jdbcType=CHAR},
+      houseMating_cookhouse = #{housematingCookhouse,jdbcType=CHAR},
+      houseMating_television = #{housematingTelevision,jdbcType=CHAR},
+      houseMating_waterHeater = #{housematingWaterheater,jdbcType=CHAR},
+      houseMating_closet = #{housematingCloset,jdbcType=CHAR},
+      houseMating_wifi = #{housematingWifi,jdbcType=CHAR},
+      houseMating_sofa = #{housematingSofa,jdbcType=CHAR},
+      housing_id = #{housingId,jdbcType=INTEGER}
+    where houseMating_id = #{housematingId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.HouseMating">
+    update housemating
+    <set>
+      <if test="housematingBed != null">
+        houseMating_bed = #{housematingBed,jdbcType=CHAR},
+      </if>
+      <if test="housematingWasher != null">
+        houseMating_washer = #{housematingWasher,jdbcType=CHAR},
+      </if>
+      <if test="housematingAirconditioner != null">
+        houseMating_airConditioner = #{housematingAirconditioner,jdbcType=CHAR},
+      </if>
+      <if test="housematingBalcony != null">
+        houseMating_balcony = #{housematingBalcony,jdbcType=CHAR},
+      </if>
+      <if test="housematingRefrigerator != null">
+        houseMating_refrigerator = #{housematingRefrigerator,jdbcType=CHAR},
+      </if>
+      <if test="housematingToilet != null">
+        houseMating_toilet = #{housematingToilet,jdbcType=CHAR},
+      </if>
+      <if test="housematingCookhouse != null">
+        houseMating_cookhouse = #{housematingCookhouse,jdbcType=CHAR},
+      </if>
+      <if test="housematingTelevision != null">
+        houseMating_television = #{housematingTelevision,jdbcType=CHAR},
+      </if>
+      <if test="housematingWaterheater != null">
+        houseMating_waterHeater = #{housematingWaterheater,jdbcType=CHAR},
+      </if>
+      <if test="housematingCloset != null">
+        houseMating_closet = #{housematingCloset,jdbcType=CHAR},
+      </if>
+      <if test="housematingWifi != null">
+        houseMating_wifi = #{housematingWifi,jdbcType=CHAR},
+      </if>
+      <if test="housematingSofa != null">
+        houseMating_sofa = #{housematingSofa,jdbcType=CHAR},
+      </if>
+      <if test="housingId != null">
+        housing_id = #{housingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where houseMating_id = #{housematingId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByHousingId" parameterType="com.house.entity.HouseMating">
+    update housemating
+    <set>
+      <if test="housematingBed != null">
+        houseMating_bed = #{housematingBed,jdbcType=CHAR},
+      </if>
+      <if test="housematingWasher != null">
+        houseMating_washer = #{housematingWasher,jdbcType=CHAR},
+      </if>
+      <if test="housematingAirconditioner != null">
+        houseMating_airConditioner = #{housematingAirconditioner,jdbcType=CHAR},
+      </if>
+      <if test="housematingBalcony != null">
+        houseMating_balcony = #{housematingBalcony,jdbcType=CHAR},
+      </if>
+      <if test="housematingRefrigerator != null">
+        houseMating_refrigerator = #{housematingRefrigerator,jdbcType=CHAR},
+      </if>
+      <if test="housematingToilet != null">
+        houseMating_toilet = #{housematingToilet,jdbcType=CHAR},
+      </if>
+      <if test="housematingCookhouse != null">
+        houseMating_cookhouse = #{housematingCookhouse,jdbcType=CHAR},
+      </if>
+      <if test="housematingTelevision != null">
+        houseMating_television = #{housematingTelevision,jdbcType=CHAR},
+      </if>
+      <if test="housematingWaterheater != null">
+        houseMating_waterHeater = #{housematingWaterheater,jdbcType=CHAR},
+      </if>
+      <if test="housematingCloset != null">
+        houseMating_closet = #{housematingCloset,jdbcType=CHAR},
+      </if>
+      <if test="housematingWifi != null">
+        houseMating_wifi = #{housematingWifi,jdbcType=CHAR},
+      </if>
+      <if test="housematingSofa != null">
+        houseMating_sofa = #{housematingSofa,jdbcType=CHAR},
+      </if>
+      <if test="housingId != null">
+        housing_id = #{housingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </update>
+</mapper>

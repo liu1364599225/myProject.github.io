@@ -1,0 +1,300 @@
+body{
+	margin: 0;
+	background: url(../img/indexBG.jpg) no-repeat;
+	background-size: 100% 100%;
+}
+
+#top{
+	height: 100px;
+	line-height: 100px;
+	margin-top: 50px;
+	padding: 0px;
+}
+
+#logo-img{
+	color: darkgoldenrod;
+	font-size: 50px;
+}
+
+#sytemName{
+	font-size: 24px;
+	color: white;
+	margin-left: 10px;
+}
+
+#top-navigation{
+	width: 400px;
+	height: 100%;
+	float: right;
+}
+
+.top-navigation-a{
+	color: powderblue;
+	font-weight: bold;
+	font-size: 24px;
+	float:right;
+}
+
+.top-navigation-p{
+	color: powderblue;
+	font-weight: bold;
+	font-size: 24px;
+	display: inline;
+}
+
+#top-navigation-name{
+	width: 180px;
+	height: 100%;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	float: left;
+	
+}
+
+.avatar-div-div a{
+	font-size: 16px;
+	margin-left: 15px;
+}
+
+.avatar-div{
+	float: right;
+	margin-right: 50px;
+	position: relative;
+}
+
+#avatar{
+	padding: 0px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.avatar-div-div{
+	padding-top: 20px;
+	line-height: 30px;
+	text-align: center;
+	width: 80px;
+	height: 150px;
+	background-color: white;
+	position: absolute;
+	top: 86px;
+	left: -12px;
+	z-index:100;
+	border: 1px solid white;
+	border-radius: 20%;
+	display: none;
+}
+
+.avatar-div-div:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent; /*调整小三角形的大小*/
+    border-bottom-color: white;/*改变小三角的颜色（最好就是和父级div的背景颜色相同）;bottom是用于调整小三角的方向*/
+    position: absolute;
+    left: 28px;/*调整小三角形的位置*/
+    bottom: 100%;/*调整小三角形的位置*/
+    margin-top: 20px;/*调整小三角形的位置*/
+    
+}
+
+.userName{
+	width: 64px;
+	font-size: 15px;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: auto;
+}
+
+#center{
+	background-color: white;
+	padding: 20px;
+	padding-top: 30px;
+	padding-bottom: 50px;
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+.housing-title{
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.housing-type{
+	padding-top: 10px;
+	font-size: 16px;
+}
+
+.housing-type-p{
+	color: black;
+	font-size: 20px;
+	display: inline;
+}
+
+.housing-div{
+	padding-top: 20px;
+}
+
+.housing-div-left{
+	padding: 0px;
+	width: 60%;
+	float: left;
+}
+
+.housing-div-left-imgDiv{
+	width: 100%;
+}
+
+.prev-next{
+	line-height: 350px;
+	font-size: 50px;
+}
+
+.housing-div-right{
+	width: 35%;
+	border: 1px dashed gainsboro;
+	float: right;
+}
+
+.housing-div-right-div{
+	padding-top: 10px;
+	text-align: center;
+}
+
+.housing-div-right-img{
+	width: 140px;
+	height: 140px;
+}
+
+.housing-information-title{
+	font-size: 20px;
+	color: black;
+	font-weight: bold;
+	padding-top: 30px;
+	padding-bottom: 10px;
+	border-bottom: 1px dashed gainsboro;
+}
+
+.housing-information-content{
+	padding-top: 10px;
+	font-size: 14px;
+}
+
+.housing-information-content-div{
+	width: 100%;
+	padding-top: 10px;
+	float: left;
+}
+
+.housing-information-content-div div{
+	color: black;
+	width: 30%;
+	float: left;
+}
+
+.housing-information-content-div span{
+	color: #999;
+	float: left;
+}
+
+.housing-information-content-div2{
+	padding-top: 10px;
+}
+
+.housing-information-content-div2 span{
+	font-size: 20px;
+	padding: 15px;
+	border: 1px solid black;
+	border-radius: 50%;
+	margin-left: 30px;
+}
+
+
+
+.commentsText{
+	padding:10px;
+	width:100%;
+	height:100px;
+	background-color:#F5F5F5;
+	border:solid 1px #ececec;
+	border-radius:5px;
+}
+
+.prompt-div{
+	float:right;
+	text-align:right;
+}
+
+.otherComments-div{
+	width:100%;
+	position:relative;
+	padding:20px;
+	padding-left:70px;
+	border-top:1px solid #ededed;
+}
+
+.userAvatar-box{
+	width: 50px;
+	height: 50px;
+	border-radius: 126px;
+	overflow: hidden;
+	position:absolute;
+	left:0px;
+}
+
+.otherComments-text{
+	width: 100%;
+	height: 100px;
+	background-color: white;
+	border:0px;
+	margin-top: 10px;
+	overflow:hidden;
+}
+
+/**提示框**/
+.promptBox-background{
+	position:fixed;
+	z-index:9998;
+	top:0;
+	right:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,.2);
+	display:none;
+}
+
+.promptBox{
+	width:520px;
+	margin:auto;
+	padding:10px;
+	margin-top:10%;
+	background-color:white;
+	border:1px solid #bfbfbf;
+	box-shadow:0 0 10px rgba(0,0,0,.3);
+}
+
+.promptBox-title{
+	padding:10px;
+	text-align:center;
+	line-height: 20px;
+	border-bottom:1px solid gainsboro;
+}
+
+.promptBox-close{
+	font-size: 20px;
+	color: #999;
+	float: right;
+}
+
+.promptBox-text{
+	padding:40px;
+	font-size:14px;
+}
+
+/****/
+

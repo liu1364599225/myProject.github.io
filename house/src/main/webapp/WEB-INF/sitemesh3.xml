@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <!-- 排除，不进行装饰的路径 -->
+    
+    <mapping path="/pass/**" exclue="true"/>
+    <mapping path="/loginPage.fw" exclue="true"/>
+    <mapping path="/login.fw" exclue="true"/>
+    <mapping path="/userRegisterPage.fw" exclue="true"/>
+    <mapping path="/houseKeeperRegisterPage.fw" exclue="true"/>
+    <mapping path="/checkUserAccount.fw" exclue="true"/>
+    <mapping path="/checkHkAccount.fw" exclue="true"/>
+    <mapping path="/checkPassword.fw" exclue="true"/>
+    <mapping path="/checkAgainPassword.fw" exclue="true"/>
+    <mapping path="/checkUserName.fw" exclue="true"/>
+    <mapping path="/checkContactWay.fw" exclue="true"/>
+    <mapping path="/checkAvatar.fw" exclue="true"/>
+    <mapping path="/checkAddress.fw" exclue="true"/>
+    <mapping path="/houseKeeperRegister.fw" exclue="true"/>
+    <mapping path="/userRegister.fw" exclue="true"/>
+    <mapping path="/updateUserInformation.fw" exclue="true"/>
+    <mapping path="/updateHouseKeeperInformation.fw" exclue="true"/>
+    <mapping path="/checkPriceAndArea.fw" exclue="true"/>
+    
+  	<!-- 前端音乐布局 -->
+    <mapping>
+      <path>/*/*</path>
+      <path>/*.fw</path>
+      <path>/index</path>
+      <path>/</path>
+      <decorator>/WEB-INF/layouts/default.jsp</decorator>
+    </mapping>
+    
+   	
+    
+    <!-- 自定义 tag 规则 
+    <content-processor>
+      <tag-rule-bundle class="com.shop.tag.ExtHtmlTagRuleBundle" />
+    </content-processor>-->
+    
+</sitemesh>

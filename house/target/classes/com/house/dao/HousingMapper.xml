@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.HousingMapper">
+  <resultMap id="BaseResultMap" type="com.house.entity.Housing">
+    <id column="housing_id" jdbcType="INTEGER" property="housingId" />
+    <result column="housing_title" jdbcType="VARCHAR" property="housingTitle" />
+    <result column="housing_about" jdbcType="VARCHAR" property="housingAbout" />
+    <result column="housing_image" jdbcType="VARCHAR" property="housingImage" />
+    <result column="housing_address" jdbcType="VARCHAR" property="housingAddress" />
+    <result column="housing_detailsAddress" jdbcType="VARCHAR" property="housingDetailsaddress" />
+    <result column="housing_price" jdbcType="VARCHAR" property="housingPrice" />
+    <result column="housing_area" jdbcType="VARCHAR" property="housingArea" />
+    <result column="housing_houseType" jdbcType="VARCHAR" property="housingHousetype" />
+    <result column="housing_floor" jdbcType="VARCHAR" property="housingFloor" />
+    <result column="housing_createTime" jdbcType="TIMESTAMP" property="housingCreatetime" />
+    <result column="housing_checkState" jdbcType="CHAR" property="housingCheckstate" />
+    <result column="housing_leaseState" jdbcType="CHAR" property="housingLeasestate" />
+    <result column="houseType_id" jdbcType="INTEGER" property="housetypeId" />
+    <result column="houseKeeper_id" jdbcType="INTEGER" property="housekeeperId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    housing_id, housing_title, housing_about, housing_image, housing_address, housing_detailsAddress, 
+    housing_price, housing_area, housing_houseType, housing_floor, housing_createTime, 
+    housing_checkState, housing_leaseState, houseType_id, houseKeeper_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByHousekeeperId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where houseKeeper_id = #{houseKeeperId,jdbcType=INTEGER} ORDER BY housing_createTime desc
+  </select>
+  
+  <select id="listByState" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_checkState = '2' and housing_leaseState = '0' order by housing_createTime desc;
+  </select>
+  
+  <select id="listByStateCheck" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_checkState = '0' order by housing_createTime desc;
+  </select>
+  
+  <select id="listByStateAndHT" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_checkState = '2' and housing_leaseState = '0'
+      <if test="housetypeId != null">
+        and houseType_id = #{housetypeId,jdbcType=INTEGER}
+      </if>
+      <if test="housePrice1 != null">
+        and (CONVERT(housing_price,SIGNED) &gt;= CONVERT(#{housePrice1,jdbcType=VARCHAR},SIGNED)
+      </if>
+      <if test="housePrice2 != null">
+        and CONVERT(housing_price,SIGNED) &lt;= CONVERT(#{housePrice2,jdbcType=VARCHAR},SIGNED))
+      </if>
+      <if test="roomType != null">
+        and housing_houseType = #{roomType,jdbcType=VARCHAR}
+      </if>
+      order by housing_createTime desc;
+  </select>
+  
+  <select id="listByStateAndlessPrice" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_checkState = '2' and housing_leaseState = '0'
+      <if test="housetypeId != null">
+        and houseType_id = #{housetypeId,jdbcType=INTEGER}
+      </if>
+      <if test="housePrice1 != null">
+        and CONVERT(housing_price,SIGNED) &lt;= CONVERT(#{housePrice1,jdbcType=VARCHAR},SIGNED)
+      </if>
+      <if test="roomType != null">
+        and housing_houseType = #{roomType,jdbcType=VARCHAR}
+      </if>
+      order by housing_createTime desc;
+  </select>
+  
+  <select id="listByStateAndThanPrice" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_checkState = '2' and housing_leaseState = '0'
+      <if test="housetypeId != null">
+        and houseType_id = #{housetypeId,jdbcType=INTEGER}
+      </if>
+      <if test="housePrice1 != null">
+        and CONVERT(housing_price,SIGNED) &gt;= CONVERT(#{housePrice1,jdbcType=VARCHAR},SIGNED)
+      </if>
+      <if test="roomType != null">
+        and housing_houseType = #{roomType,jdbcType=VARCHAR}
+      </if>
+      order by housing_createTime desc;
+  </select>
+  
+  <select id="searchByTitleAndAddress" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housing
+    where housing_title LIKE '%' #{0} '%'
+     OR housing_address LIKE '%' #{0} '%'
+      OR housing_detailsAddress LIKE '%' #{0} '%' 
+      order by housing_createTime desc;
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from housing
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.Housing">
+    insert into housing (housing_id, housing_title, housing_about, 
+      housing_image, housing_address, housing_detailsAddress, 
+      housing_price, housing_area, housing_houseType, 
+      housing_floor, housing_createTime, housing_checkState, 
+      housing_leaseState, houseType_id, houseKeeper_id
+      )
+    values (#{housingId,jdbcType=INTEGER}, #{housingTitle,jdbcType=VARCHAR}, #{housingAbout,jdbcType=VARCHAR}, 
+      #{housingImage,jdbcType=VARCHAR}, #{housingAddress,jdbcType=VARCHAR}, #{housingDetailsaddress,jdbcType=VARCHAR}, 
+      #{housingPrice,jdbcType=VARCHAR}, #{housingArea,jdbcType=VARCHAR}, #{housingHousetype,jdbcType=VARCHAR}, 
+      #{housingFloor,jdbcType=VARCHAR}, #{housingCreatetime,jdbcType=TIMESTAMP}, #{housingCheckstate,jdbcType=CHAR}, 
+      #{housingLeasestate,jdbcType=CHAR}, #{housetypeId,jdbcType=INTEGER}, #{housekeeperId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="housingId" parameterType="com.house.entity.Housing">
+    insert into housing
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="housingId != null">
+        housing_id,
+      </if>
+      <if test="housingTitle != null">
+        housing_title,
+      </if>
+      <if test="housingAbout != null">
+        housing_about,
+      </if>
+      <if test="housingImage != null">
+        housing_image,
+      </if>
+      <if test="housingAddress != null">
+        housing_address,
+      </if>
+      <if test="housingDetailsaddress != null">
+        housing_detailsAddress,
+      </if>
+      <if test="housingPrice != null">
+        housing_price,
+      </if>
+      <if test="housingArea != null">
+        housing_area,
+      </if>
+      <if test="housingHousetype != null">
+        housing_houseType,
+      </if>
+      <if test="housingFloor != null">
+        housing_floor,
+      </if>
+      <if test="housingCreatetime != null">
+        housing_createTime,
+      </if>
+      <if test="housingCheckstate != null">
+        housing_checkState,
+      </if>
+      <if test="housingLeasestate != null">
+        housing_leaseState,
+      </if>
+      <if test="housetypeId != null">
+        houseType_id,
+      </if>
+      <if test="housekeeperId != null">
+        houseKeeper_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="housingId != null">
+        #{housingId,jdbcType=INTEGER},
+      </if>
+      <if test="housingTitle != null">
+        #{housingTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="housingAbout != null">
+        #{housingAbout,jdbcType=VARCHAR},
+      </if>
+      <if test="housingImage != null">
+        #{housingImage,jdbcType=VARCHAR},
+      </if>
+      <if test="housingAddress != null">
+        #{housingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="housingDetailsaddress != null">
+        #{housingDetailsaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="housingPrice != null">
+        #{housingPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="housingArea != null">
+        #{housingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="housingHousetype != null">
+        #{housingHousetype,jdbcType=VARCHAR},
+      </if>
+      <if test="housingFloor != null">
+        #{housingFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="housingCreatetime != null">
+        #{housingCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="housingCheckstate != null">
+        #{housingCheckstate,jdbcType=CHAR},
+      </if>
+      <if test="housingLeasestate != null">
+        #{housingLeasestate,jdbcType=CHAR},
+      </if>
+      <if test="housetypeId != null">
+        #{housetypeId,jdbcType=INTEGER},
+      </if>
+      <if test="housekeeperId != null">
+        #{housekeeperId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.Housing">
+    update housing
+    <set>
+      <if test="housingTitle != null">
+        housing_title = #{housingTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="housingAbout != null">
+        housing_about = #{housingAbout,jdbcType=VARCHAR},
+      </if>
+      <if test="housingImage != null">
+        housing_image = #{housingImage,jdbcType=VARCHAR},
+      </if>
+      <if test="housingAddress != null">
+        housing_address = #{housingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="housingDetailsaddress != null">
+        housing_detailsAddress = #{housingDetailsaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="housingPrice != null">
+        housing_price = #{housingPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="housingArea != null">
+        housing_area = #{housingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="housingHousetype != null">
+        housing_houseType = #{housingHousetype,jdbcType=VARCHAR},
+      </if>
+      <if test="housingFloor != null">
+        housing_floor = #{housingFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="housingCreatetime != null">
+        housing_createTime = #{housingCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="housingCheckstate != null">
+        housing_checkState = #{housingCheckstate,jdbcType=CHAR},
+      </if>
+      <if test="housingLeasestate != null">
+        housing_leaseState = #{housingLeasestate,jdbcType=CHAR},
+      </if>
+      <if test="housetypeId != null">
+        houseType_id = #{housetypeId,jdbcType=INTEGER},
+      </if>
+      <if test="housekeeperId != null">
+        houseKeeper_id = #{housekeeperId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.Housing">
+    update housing
+    set housing_title = #{housingTitle,jdbcType=VARCHAR},
+      housing_about = #{housingAbout,jdbcType=VARCHAR},
+      housing_image = #{housingImage,jdbcType=VARCHAR},
+      housing_address = #{housingAddress,jdbcType=VARCHAR},
+      housing_detailsAddress = #{housingDetailsaddress,jdbcType=VARCHAR},
+      housing_price = #{housingPrice,jdbcType=VARCHAR},
+      housing_area = #{housingArea,jdbcType=VARCHAR},
+      housing_houseType = #{housingHousetype,jdbcType=VARCHAR},
+      housing_floor = #{housingFloor,jdbcType=VARCHAR},
+      housing_createTime = #{housingCreatetime,jdbcType=TIMESTAMP},
+      housing_checkState = #{housingCheckstate,jdbcType=CHAR},
+      housing_leaseState = #{housingLeasestate,jdbcType=CHAR},
+      houseType_id = #{housetypeId,jdbcType=INTEGER},
+      houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+    where housing_id = #{housingId,jdbcType=INTEGER}
+  </update>
+</mapper>

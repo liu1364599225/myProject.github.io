@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.house.entity.Comment">
+    <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="comment_text" jdbcType="VARCHAR" property="commentText" />
+    <result column="comment_createTime" jdbcType="TIMESTAMP" property="commentCreatetime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="housing_id" jdbcType="INTEGER" property="housingId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    comment_id, comment_text, comment_createTime, user_id, housing_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByHousingId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where housing_id = #{housingId,jdbcType=INTEGER} ORDER BY comment_createTime desc;
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.Comment">
+    insert into comment (comment_id, comment_text, comment_createTime, 
+      user_id, housing_id)
+    values (#{commentId,jdbcType=INTEGER}, #{commentText,jdbcType=VARCHAR}, #{commentCreatetime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{housingId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.house.entity.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="commentText != null">
+        comment_text,
+      </if>
+      <if test="commentCreatetime != null">
+        comment_createTime,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="housingId != null">
+        housing_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="commentText != null">
+        #{commentText,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCreatetime != null">
+        #{commentCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="housingId != null">
+        #{housingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.Comment">
+    update comment
+    <set>
+      <if test="commentText != null">
+        comment_text = #{commentText,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCreatetime != null">
+        comment_createTime = #{commentCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="housingId != null">
+        housing_id = #{housingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.Comment">
+    update comment
+    set comment_text = #{commentText,jdbcType=VARCHAR},
+      comment_createTime = #{commentCreatetime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      housing_id = #{housingId,jdbcType=INTEGER}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>

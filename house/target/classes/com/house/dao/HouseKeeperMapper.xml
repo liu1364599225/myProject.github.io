@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.HouseKeeperMapper">
+  <resultMap id="BaseResultMap" type="com.house.entity.HouseKeeper">
+    <id column="houseKeeper_id" jdbcType="INTEGER" property="housekeeperId" />
+    <result column="houseKeeper_account" jdbcType="VARCHAR" property="housekeeperAccount" />
+    <result column="houseKeeper_password" jdbcType="VARCHAR" property="housekeeperPassword" />
+    <result column="houseKeeper_name" jdbcType="VARCHAR" property="housekeeperName" />
+    <result column="houseKeeper_avatar" jdbcType="VARCHAR" property="housekeeperAvatar" />
+    <result column="houseKeeper_sex" jdbcType="CHAR" property="housekeeperSex" />
+    <result column="houseKeeper_telNumber" jdbcType="VARCHAR" property="housekeeperTelnumber" />
+    <result column="houseKeeper_address" jdbcType="VARCHAR" property="housekeeperAddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    houseKeeper_id, houseKeeper_account, houseKeeper_password, houseKeeper_name, houseKeeper_avatar, 
+    houseKeeper_sex, houseKeeper_telNumber, houseKeeper_address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from housekeeper
+    where houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAccount" resultMap="BaseResultMap">
+  	select * from housekeeper where houseKeeper_account = #{houseKeeperAccount,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from housekeeper
+    where houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.HouseKeeper">
+    insert into housekeeper (houseKeeper_id, houseKeeper_account, 
+      houseKeeper_password, houseKeeper_name, houseKeeper_avatar, 
+      houseKeeper_sex, houseKeeper_telNumber, houseKeeper_address
+      )
+    values (#{housekeeperId,jdbcType=INTEGER}, #{housekeeperAccount,jdbcType=VARCHAR}, 
+      #{housekeeperPassword,jdbcType=VARCHAR}, #{housekeeperName,jdbcType=VARCHAR}, #{housekeeperAvatar,jdbcType=VARCHAR}, 
+      #{housekeeperSex,jdbcType=CHAR}, #{housekeeperTelnumber,jdbcType=VARCHAR}, #{housekeeperAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.house.entity.HouseKeeper">
+    insert into housekeeper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="housekeeperId != null">
+        houseKeeper_id,
+      </if>
+      <if test="housekeeperAccount != null">
+        houseKeeper_account,
+      </if>
+      <if test="housekeeperPassword != null">
+        houseKeeper_password,
+      </if>
+      <if test="housekeeperName != null">
+        houseKeeper_name,
+      </if>
+      <if test="housekeeperAvatar != null">
+        houseKeeper_avatar,
+      </if>
+      <if test="housekeeperSex != null">
+        houseKeeper_sex,
+      </if>
+      <if test="housekeeperTelnumber != null">
+        houseKeeper_telNumber,
+      </if>
+      <if test="housekeeperAddress != null">
+        houseKeeper_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="housekeeperId != null">
+        #{housekeeperId,jdbcType=INTEGER},
+      </if>
+      <if test="housekeeperAccount != null">
+        #{housekeeperAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperPassword != null">
+        #{housekeeperPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperName != null">
+        #{housekeeperName,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperAvatar != null">
+        #{housekeeperAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperSex != null">
+        #{housekeeperSex,jdbcType=CHAR},
+      </if>
+      <if test="housekeeperTelnumber != null">
+        #{housekeeperTelnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperAddress != null">
+        #{housekeeperAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.HouseKeeper">
+    update housekeeper
+    <set>
+      <if test="housekeeperAccount != null">
+        houseKeeper_account = #{housekeeperAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperPassword != null">
+        houseKeeper_password = #{housekeeperPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperName != null">
+        houseKeeper_name = #{housekeeperName,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperAvatar != null">
+        houseKeeper_avatar = #{housekeeperAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperSex != null">
+        houseKeeper_sex = #{housekeeperSex,jdbcType=CHAR},
+      </if>
+      <if test="housekeeperTelnumber != null">
+        houseKeeper_telNumber = #{housekeeperTelnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="housekeeperAddress != null">
+        houseKeeper_address = #{housekeeperAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.HouseKeeper">
+    update housekeeper
+    set houseKeeper_account = #{housekeeperAccount,jdbcType=VARCHAR},
+      houseKeeper_password = #{housekeeperPassword,jdbcType=VARCHAR},
+      houseKeeper_name = #{housekeeperName,jdbcType=VARCHAR},
+      houseKeeper_avatar = #{housekeeperAvatar,jdbcType=VARCHAR},
+      houseKeeper_sex = #{housekeeperSex,jdbcType=CHAR},
+      houseKeeper_telNumber = #{housekeeperTelnumber,jdbcType=VARCHAR},
+      houseKeeper_address = #{housekeeperAddress,jdbcType=VARCHAR}
+    where houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+  </update>
+</mapper>

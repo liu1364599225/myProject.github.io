@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- spring管理SqlSession对象 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="jdbcDataSource"></property>
+        <property name="configLocation" value="classPath:mybatis.xml"></property>
+    </bean>
+    
+   <!--  引入外部的jdbc.properties -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classPath:jdbc.properties"></property>
+    </bean>
+    
+    <!-- 获得数据库jdbc连接对象 -->
+    <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         <property name="driverClassName" value="${driver}"></property>
+         <property name="url" value="${url}"></property>
+         <property name="username" value="${username}"></property>
+         <property name="password" value="${password}"></property>
+    </bean>
+    
+    <!--统一配置生成dao包下面的所有dao接口的对象 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+		<property name="basePackage" value="com.house.dao" />
+	</bean>
+    
+    <!-- 生成service对象  -->
+	<bean id="commentService" class="com.house.service.impl.CommentServiceImpl" />
+    <bean id="houseKeeperService" class="com.house.service.impl.HouseKeeperServiceImpl" />
+    <bean id="houseMatingService" class="com.house.service.impl.HouseMatingServiceImpl" />
+    <bean id="houseTypeService" class="com.house.service.impl.HouseTypeServiceImpl" />
+    <bean id="housingService" class="com.house.service.impl.HousingServiceImpl" />
+    <bean id="managerService" class="com.house.service.impl.ManagerServiceImpl" />
+    <bean id="reservationRecordService" class="com.house.service.impl.ReservationRecordServiceImpl" />
+    <bean id="userService" class="com.house.service.impl.UserServiceImpl" />
+        
+	<!-- 文件上传Multipart解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="1024000000" />
+	</bean>
+    
+    <!-- 配置multipart解析器
+    <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+    </bean> -->
+    
+    <!-- 配置扫描器 -->
+    <context:component-scan base-package="com.house.**" />
+    <mvc:annotation-driven />
+    
+    
+	<!-- 配置过滤器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<!-- <mvc:exclude-mapping path="/loginPage.fw"/> -->
+			<bean class="com.house.fifter.LoginFifter"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

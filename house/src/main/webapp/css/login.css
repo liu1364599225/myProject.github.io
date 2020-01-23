@@ -1,0 +1,119 @@
+body{
+	margin: 0;
+	background: url(../img/indexBG1.jpg) no-repeat;
+	background-size: 100%;
+}
+
+#logo{
+	height: 100px;
+	line-height: 100px;
+	margin-top: 50px;
+}
+
+#logo-img{
+	color: darkgoldenrod;
+	font-size: 50px;
+}
+
+#sytemName{
+	font-size: 24px;
+	color: white;
+	margin-left: 10px;
+}
+
+#center{
+	height: 350px;
+	padding: 0px;
+}
+
+#login{
+	 background-color: white;
+	 border: 3px;
+	 border-style: solid;
+	 border-color: gainsboro;
+	 border-radius: 10px;
+	 height: 100%;
+}
+
+#title{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	font-size: 20px;
+	text-align: center;
+	border: 1px;
+	border-bottom-style: dashed;
+	border-bottom-color: gainsboro;
+}
+
+#prompt{
+	width: 100%;
+	height: 20px;
+	font-size: 12px;
+	color: red;
+	text-align: center;
+}
+
+#accountName{
+	width: 300px;
+	height: 45px;
+	margin: auto;
+}
+
+#password{
+	width: 300px;
+	height: 45px;
+	margin: auto;
+}
+
+#div-select{
+	width: 300px;
+	margin: auto;
+}
+
+#form-group-title{
+	font-size: 16px;
+}
+
+#form-group-select{
+	width: 90px;
+	height: 30px;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+#div-valicode{
+	width: 300px;
+	margin: auto;
+	margin-top: 10px;
+}
+
+#valicode{
+	width: 100px;
+}
+
+#img-valicode{
+	height: 40px;
+	width: 100px;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-left: 25px;
+}
+
+#div-button{
+	width: 100%;
+	margin-top: 15px;
+	text-align: center;
+}
+
+#loginButton{
+	width: 100px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#registerButton{
+	width: 100px;
+	font-size: 16px;
+	font-weight: bold;
+}

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.ReservationRecordMapper">
+  <resultMap id="BaseResultMap" type="com.house.entity.ReservationRecord">
+    <id column="reservationRecord_id" jdbcType="INTEGER" property="reservationrecordId" />
+    <result column="reservationRecord_state" jdbcType="VARCHAR" property="reservationrecordState" />
+    <result column="reservationRecord_lookingTime" jdbcType="TIMESTAMP" property="reservationrecordLookingtime" />
+    <result column="reservationRecord_createTime" jdbcType="TIMESTAMP" property="reservationrecordCreatetime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="housing_id" jdbcType="INTEGER" property="housingId" />
+    <result column="houseKeeper_id" jdbcType="INTEGER" property="housekeeperId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    reservationRecord_id, reservationRecord_state, reservationRecord_lookingTime, reservationRecord_createTime, 
+    user_id, housing_id, houseKeeper_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+    where reservationRecord_id = #{reservationrecordId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOrderState" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+	WHERE user_id = #{0} AND housing_id = #{1} 
+	AND (reservationrecord_state = '正在预约' OR reservationrecord_state = '预约成功') AND DATEDIFF(NOW(),reservationRecord_lookingTime) &lt;= 0
+  </select>
+  
+  <select id="selectByLookTime" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+	WHERE reservationrecord_state != '已失效' AND DATEDIFF(NOW(),reservationRecord_lookingTime) &gt; 0
+  </select>
+  
+  <select id="selectByUserIdAndHousingId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+    where user_id = #{0,jdbcType=INTEGER} and housing_id = #{1,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+    where user_id = #{userId,jdbcType=INTEGER} ORDER BY reservationRecord_createTime desc
+  </select>
+  
+  <select id="selectByHkId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+    where houseKeeper_id = #{housekeeperId,jdbcType=INTEGER} ORDER BY reservationRecord_createTime desc
+  </select>
+  
+  <select id="listByAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reservationrecord
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reservationrecord
+    where reservationRecord_id = #{reservationrecordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.ReservationRecord">
+    insert into reservationrecord (reservationRecord_id, reservationRecord_state, 
+      reservationRecord_lookingTime, reservationRecord_createTime, 
+      user_id, housing_id, houseKeeper_id
+      )
+    values (#{reservationrecordId,jdbcType=INTEGER}, #{reservationrecordState,jdbcType=VARCHAR}, 
+      #{reservationrecordLookingtime,jdbcType=TIMESTAMP}, #{reservationrecordCreatetime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{housingId,jdbcType=INTEGER}, #{housekeeperId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.house.entity.ReservationRecord">
+    insert into reservationrecord
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reservationrecordId != null">
+        reservationRecord_id,
+      </if>
+      <if test="reservationrecordState != null">
+        reservationRecord_state,
+      </if>
+      <if test="reservationrecordLookingtime != null">
+        reservationRecord_lookingTime,
+      </if>
+      <if test="reservationrecordCreatetime != null">
+        reservationRecord_createTime,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="housingId != null">
+        housing_id,
+      </if>
+      <if test="housekeeperId != null">
+        houseKeeper_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reservationrecordId != null">
+        #{reservationrecordId,jdbcType=INTEGER},
+      </if>
+      <if test="reservationrecordState != null">
+        #{reservationrecordState,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationrecordLookingtime != null">
+        #{reservationrecordLookingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationrecordCreatetime != null">
+        #{reservationrecordCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="housingId != null">
+        #{housingId,jdbcType=INTEGER},
+      </if>
+      <if test="housekeeperId != null">
+        #{housekeeperId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.ReservationRecord">
+    update reservationrecord
+    <set>
+      <if test="reservationrecordState != null">
+        reservationRecord_state = #{reservationrecordState,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationrecordLookingtime != null">
+        reservationRecord_lookingTime = #{reservationrecordLookingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservationrecordCreatetime != null">
+        reservationRecord_createTime = #{reservationrecordCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="housingId != null">
+        housing_id = #{housingId,jdbcType=INTEGER},
+      </if>
+      <if test="housekeeperId != null">
+        houseKeeper_id = #{housekeeperId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where reservationRecord_id = #{reservationrecordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.ReservationRecord">
+    update reservationrecord
+    set reservationRecord_state = #{reservationrecordState,jdbcType=VARCHAR},
+      reservationRecord_lookingTime = #{reservationrecordLookingtime,jdbcType=TIMESTAMP},
+      reservationRecord_createTime = #{reservationrecordCreatetime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      housing_id = #{housingId,jdbcType=INTEGER},
+      houseKeeper_id = #{housekeeperId,jdbcType=INTEGER}
+    where reservationRecord_id = #{reservationrecordId,jdbcType=INTEGER}
+  </update>
+</mapper>

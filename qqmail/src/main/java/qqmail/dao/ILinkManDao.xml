@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.ILinkManDao">
+	<select id="readAllLinkManByUserId" resultType="qqmail.entry.LinkManInfo">
+	    SELECT l.linkman_id id,u.nickname NAME,u.user_account account,u.user_tel tel,lg.group_name groupName 
+	    FROM linkman l,USER u,linkmangroup lg 
+	    WHERE l.linkman_id = u.user_id AND lg.group_id=l.group_id AND l.user_id=#{userId}; 
+	</select>
+	
+	<select id="readAllLinkManByGroupName" resultType="qqmail.entry.LinkManInfo">
+	    SELECT l.linkman_id id,u.nickname name,u.user_account account,u.user_tel tel,lg.group_name groupName 
+	    FROM linkman l,USER u,linkmangroup lg 
+	    WHERE l.linkman_id = u.user_id AND lg.group_id=l.group_id AND l.user_id=#{1} AND lg.group_name=#{0};
+	</select>
+	
+	<select id="readAllGroupByUserId" resultType="qqmail.entry.GroupNameInfo">
+	    SELECT COUNT(*) num,t.group_name groupName FROM
+		(SELECT group_name FROM linkman,linkmangroup WHERE linkman.group_id=linkmangroup.group_id AND linkman.user_id=#{userId}) t
+		GROUP BY t.group_name
+	</select>
+	
+	<update id="updataGroupName">
+	    UPDATE linkman SET group_id=#{2} WHERE user_id=#{0} AND linkman_id=(SELECT user_id FROM USER WHERE user_account=#{1})
+	</update>
+	
+	<insert id="saveGroupName">
+	     INSERT INTO linkmangroup(group_name) VALUES(#{group_name})
+	     <selectKey keyProperty="group_id" order="AFTER" resultType="int">
+	         select last_insert_id()
+	     </selectKey>
+	</insert>
+	
+	<select id="returnaGroupIdByName" resultType="qqmail.entry.Linkmangroup">
+	     select * from linkmangroup where group_name=#{groupName}
+	</select>
+	
+	<delete id="deleteByAccount">
+	     DELETE FROM linkman WHERE user_id=#{1} AND linkman_id = (SELECT user_id FROM USER WHERE user_account=#{0})
+	</delete>
+	
+	
+	
+	
+	<select id="selectByUid" resultType="qqmail.entry.Linkman">
+	    select * from linkman where user_id = #{user_id}
+	</select>
+	
+	<select id="selectGid" resultType="Integer">
+		SELECT DISTINCT(group_id) FROM linkman WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="selectByUidAndGid" resultType="qqmail.entry.Linkman">
+		select * from linkman where user_id = #{0} and group_id=#{1}
+	</select>
+	
+	<select id="selectByLidAndGid" resultType="qqmail.entry.Linkman">
+		SELECT * FROM linkman WHERE linkman_id = #{0} AND group_id = #{1};
+	</select>
+	
+	<insert id="insert">
+		insert into linkman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="linkman_id != 0">
+				linkman_id,
+			</if>
+			<if test="user_id != 0">
+				user_id,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="job != null">
+				job,
+			</if>
+			<if test="group_id != 0">
+				group_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="linkman_id != 0">
+				#{linkman_id},
+			</if>
+			<if test="user_id != 0">
+			   #{user_id},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="birthday != null">
+				#{birthday},
+			</if>
+			<if test="job != null">
+				#{job},
+			</if>
+			<if test="group_id != 0">
+				#{group_id},
+			</if>
+		</trim>
+	</insert>
+</mapper>

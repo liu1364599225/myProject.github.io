@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.INotepaperDao">
+	<select id="listByAll" resultType="qqmail.entry.Notepaper">
+		select * from notepaper
+	</select>
+	
+	<select id="listByOnePage" resultType="qqmail.entry.Notepaper">
+		select * from notepaper limit #{0},#{1}
+	</select>
+	
+	<select id="selectById" resultType="qqmail.entry.Notepaper">
+		select * from notepaper where notepaper_id = #{notepaper_id}
+	</select>
+	
+	<insert id="insert">
+	    insert into notepaper (notepaper_img) values(#{notepaper_img})
+	</insert>
+</mapper>

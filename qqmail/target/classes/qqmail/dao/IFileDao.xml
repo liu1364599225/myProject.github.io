@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.IFileDao">
+	<insert id="createFile">
+	    insert into file(fileName,filePath,uploadDate,userId)
+	    values(#{fileName},#{filePath},#{uploadDate},#{userId})
+	</insert>
+	
+	<select id="readAllFileById" resultType="qqmail.entry.MyFile">
+	    select * from file where userId=#{userId}
+	</select>
+	
+	<delete id="deleteByFileId">
+	    delete from file where fileId=#{id}
+	</delete>
+</mapper>

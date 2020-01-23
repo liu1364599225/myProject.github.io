@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.INow_linkmanDao">
+	<select id="selectTopFive" resultType="qqmail.entry.Now_linkman">
+		select * from now_linkman where user_id=#{user_id} ORDER BY link_time DESC limit 5;
+	</select>
+	
+	<select id="selectTopFive1" resultType="qqmail.entry.Now_linkman">
+		SELECT * FROM (SELECT * FROM now_linkman WHERE user_id=#{0} ORDER BY link_time DESC LIMIT 5) l WHERE l.linkman_id = #{1};
+	</select>
+	
+	<select id="listByUidAll" resultType="qqmail.entry.Now_linkman">
+		select * from now_linkman where user_id=#{user_id} ORDER BY link_time DESC;
+	</select>
+	
+	<delete id="delete">
+		delete from now_linkman where id=#{id}
+	</delete>
+	
+	<delete id="deleteByLid">
+		delete from now_linkman where linkman_id=#{linkman_id}
+	</delete>
+	
+	<delete id="deleteByUid">
+		delete from now_linkman where user_id=#{user_id}
+	</delete>
+	
+	<insert id="insert">
+		insert into now_linkman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		 	<if test="user_id != 0">
+		 		user_id,
+		 	</if>
+		 	<if test="linkman_id != 0">
+		 		linkman_id,
+		 	</if>
+		 	link_time,
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+		 	<if test="user_id != null">
+		 		#{user_id},
+		 	</if>
+		 	<if test="linkman_id != null">
+		 		#{linkman_id},
+		 	</if>
+		 	now(),
+		 </trim>
+	</insert>
+</mapper>

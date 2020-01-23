@@ -1,0 +1,371 @@
+#register-img{
+	width: 480px;
+	height: 100%;
+	display: inline-block;
+	position: fixed;
+}
+
+#register-div{
+	width: 869px;
+	float: right;
+}
+
+#register-left-top{
+	height: 60px;
+	width: 100%;
+}
+
+
+.left-top{
+	padding-top: 10px;
+	margin-top: 20px;
+	margin-right: 60px;
+	font-size: 16px;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+#leaf-top-img{
+	height: 34px;
+	width: 100px;
+	float: right;
+	margin-right: 60px;
+	margin-top: 17px;
+}
+
+#leaf-top-img img{
+	width: 23px;
+	height: 34px;
+	position: relative;
+	float: left;
+}
+
+#left-img-font{
+	font-size: 16px;
+	color: white;
+	display: inline-block;
+	margin-top: 12px;
+	background-color: red;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 8px;
+}
+
+#qqaccount{
+	color: #949494;
+}
+
+#language{
+	position: relative;
+}
+
+#language-change{
+	display: none;
+	position: absolute;
+}
+
+#language-change span{
+	display: inline-block;
+	margin-top: 10px;
+	font-size:17px;
+	color: #B8B8B8;
+}
+
+#register-left-bottom{
+	margin-top: 40px;
+	padding: 0px;
+}
+
+#bottom-mail-register{
+	font-size: 40px;
+	font-weight: 500;
+	margin-bottom: 20px;
+}
+
+#bottom-mail-qqname{
+	font-size: 28px;
+	margin-bottom: 64px;
+}
+
+#mail-account{
+	width: 297px;
+	height: 52px;
+	padding: 0px;
+	border: solid 1px #AAAAAA;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 7px;
+	float: left;
+	font-size: 20px;
+	outline: none;
+}
+
+#mail-type{
+	float: right;
+	height: 52px;
+	border: solid 1px #AAAAAA;
+	padding-left: 10px;
+	padding-right:10px;
+	width: 168px;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 52px;
+	border-radius: 7px;
+	position: relative;
+}
+
+#mail-name{
+	width: 100px; 
+	margin: 0px; 
+	float: left; 
+	display: inline;
+}
+
+input::-webkit-input-placeholder{
+	font-size: 20px;
+}
+
+#mail-type span{
+	font-size: 14px;
+	float: right;
+	line-height: 52px;
+}
+
+#account-tip{
+	font-size: 14px;
+	color: #999999;
+	float: left;
+	margin-top: 8px;
+	width: 100%;
+}
+
+#mail-type-ul{
+	position: absolute;
+	border: solid 1px #AAAAAA;
+	list-style-type: none;
+	padding: 0px;
+	width: 168px;
+	right: 0px;
+	background-color: #FFFFFF;
+	display: none;
+	border-radius: 7px;
+	top: 51px;
+}
+
+#mail-type-ul li{
+	padding-left: 10px;
+	cursor: pointer;
+}
+
+#mail-type-ul li:hover{
+	background-color: #EEEEEE;
+}
+#mail-type-ul li:visited{
+	background-color: #FFFFFF;
+}
+
+#nickname{
+	margin-top: 30px;
+	width: 100%;
+	height: 52px;
+	padding: 0px;
+	border: solid 1px #AAAAAA;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 7px;
+	float: left;
+	font-size: 20px;
+	outline: none;
+}
+
+.warn{
+	float: left;
+	font-size: 14px;
+	color: #FF5B5B;
+	height: 22px;
+	line-height: 22px;
+	width: 100%;
+	margin-top: 5px;
+}
+
+#warn-font{
+	font-size: 22px;
+	color: #ED6661;
+	margin-right: 5px;
+	line-height: 22px;
+}
+
+#password{
+	margin-top: 30px;
+	width: 100%;
+	height: 52px;
+	padding: 0px;
+	border: solid 1px #AAAAAA;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 7px;
+	float: left;
+	font-size: 20px;
+	outline: none;
+}
+
+#password1{
+	margin-top: 30px;
+	width: 100%;
+	height: 52px;
+	padding: 0px;
+	border: solid 1px #AAAAAA;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 7px;
+	float: left;
+	font-size: 20px;
+	outline: none;
+}
+
+.password-tip{
+	float: left;
+	width: 100%;
+}
+
+#password-font1{
+	color: #44E86C;
+	font-size: 20px;
+	margin-right: 5px;
+}
+
+#password-font2{
+	color: #A2C4FC;
+	font-size: 20px;
+	margin-right: 5px;
+}
+
+#phone-num-type{
+	position: relative;
+	margin-top: 30px;
+	float: left;
+	height: 52px;
+	width: 154px;
+	border: solid 1px #AAAAAA;
+	font-size: 20px;
+	line-height: 50px;
+	border-radius: 7px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#phonenum{
+	float: left;
+	font-size: 20px;
+	line-height: 50px;
+}
+
+#phone-num-type span{
+	float: right;
+	line-height: 50px;
+	font-size: 14px;
+}
+
+#phone-num{
+	margin-top: 30px;
+	width: 297px;
+	height: 52px;
+	padding: 0px;
+	border: solid 1px #AAAAAA;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 7px;
+	float: right;
+	font-size: 20px;
+	outline: none;
+}
+
+#phone-num-type-ul{
+	position: absolute;
+	list-style-type: none;
+	padding: 0px;
+	width: 489px;
+	left: 0px;
+	top: 51px;
+	background-color: #FFFFFF;
+	border: solid 1px #AAAAAA;
+	border-radius: 7px;
+}
+
+#phone-num-type-ul li{
+	cursor: pointer;
+}
+
+#phone-num-type-ul li:hover{
+	background-color: #EEEEEE;
+}
+
+#phone-num-type-ul li:visited{
+	background-color: #FFFFFF;
+}
+
+#register-buttom{
+	padding: 0px;
+	width: 100%;
+	height: 60px;
+	border: solid 1px #317DEB;
+	background-color: #3587FF;
+	font-size: 24px;
+	color: white;
+	margin-top: 40px;
+}
+
+#register-buttom:hover{
+	background-color: #317DEB;
+}
+#register-buttom:visited{
+	background-color: #3587FF;
+}
+
+#code{
+	height: 52px;
+	width: 154px;
+	border: solid 1px #959595;
+	border-radius: 7px;
+	float: left;
+	padding-left: 20px;
+	padding-right: 20px;
+	outline: none;
+	margin-top: 30px;
+	font-size: 20px;
+}
+
+#send-code{
+	float: right;
+	display: block;
+	width: 309px;
+	height: 52px;
+	border: solid 1px #3688FF;
+	background-color: #3688FF;
+	color: #FFFFFF;
+	font-size: 20px;
+	margin-top: 30px;
+	line-height: 50px;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 7px;
+	cursor: pointer;
+}
+
+#phone-tip{
+	font-size: 14px;
+	color: #999999;
+	float: left;
+	margin-top: 8px;
+	width: 100%;
+}
+
+#code-tip{
+	font-size: 14px;
+	color: red;
+	float: left;
+	margin-top: 8px;
+	width: 100%;
+	display: none;
+}

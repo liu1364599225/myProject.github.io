@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.IStarDao">
+	<select id="readAll_Star_Count" resultType="qqmail.entry.MailPro">
+	   SELECT * FROM mail m JOIN STATUS s ON m.`status_id` = s.`mail_status_id` WHERE s.`bit_mail` = #{0} AND garbage = "false" and m.`accept_mail_id` = #{1} and deletes ="false" order by send_time desc
+	</select>
+	
+	<select id="readAll_Star_ById" resultType="qqmail.entry.MailPro">
+	   SELECT * FROM mail m JOIN STATUS s ON m.`status_id` = s.`mail_status_id` WHERE garbage = "false" and s.`bit_mail` = #{0} AND  m.`send_mail_id` = #{1} and mail_id = #{2}
+	</select>
+	
+	<!-- 分页 -->
+	<select id="readAll_Star" resultType="qqmail.entry.MailPro">
+	   SELECT * FROM mail m JOIN STATUS s ON m.`status_id` = s.`mail_status_id` WHERE s.`bit_mail` = #{0} AND garbage = "false" and m.`accept_mail_id` = #{1} and deletes ="false" order by send_time desc limit #{2},#{3}
+	</select>
+	<!-- 查找未读状态邮件的个数 -->
+	<select id="readAll_StarPro" resultType="qqmail.entry.MailPro">
+	   SELECT * FROM mail m JOIN STATUS s ON m.`status_id` = s.`mail_status_id` WHERE s.`bit_mail` = #{0} AND garbage = "false" and m.`accept_mail_id` = #{1} and deletes ="false" and afind = "false" order by send_time desc 
+	</select>
+	
+	<!--查找对应接收id的所有信件以及状态表id  -->
+	<select id="readBySendId" resultType="qqmail.entry.Status">
+	  SELECT * FROM STATUS WHERE mail_status_id IN (SELECT status_id FROM mail WHERE send_mail_id = #{0} AND garbage = "false" and mail_id = #{1})
+	</select> 
+	
+	<!-- 邮箱是否查看更新 -->
+	<update id="update">
+	    UPDATE STATUS SET afind = #{0},unfind = #{1} WHERE mail_status_id =#{2}
+	</update>
+	<!-- 星标邮件更新 -->
+	<update id="updateStar">
+	    UPDATE STATUS SET bit_mail= #{0} WHERE mail_status_id =#{1}
+	</update>
+	<!-- 更新为删除状态 -->
+	<update id="updateDeletes">
+	    UPDATE STATUS SET deletes = #{0}  WHERE mail_status_id =#{1}
+	</update>
+	<!-- 收件箱更新 -->
+	<update id="updateInbox">
+	    UPDATE STATUS SET inbox= #{0},asend = "false" WHERE mail_status_id =#{1}
+	</update>
+	<!-- 更新为垃圾箱 -->
+	<update id="updateReport">
+	    UPDATE STATUS SET garbage = #{0}  WHERE mail_status_id =#{1}
+	</update>
+	
+	<!-- 彻底删除(联表删除 status 和 mail 中对应的数据) -->
+	<delete id="deleteTrue">
+		DELETE m,s FROM mail m,STATUS s WHERE status_id = mail_status_id AND mail_status_id =#{0}
+	</delete>
+	
+	<!-- 更新邮件是否发送 -->
+	<update id="updateAsend">
+	    UPDATE STATUS SET asend = #{0},unsend = #{1} WHERE mail_status_id =#{2}
+	</update>
+</mapper>

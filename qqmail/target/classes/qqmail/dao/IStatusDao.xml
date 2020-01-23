@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="qqmail.dao.IStatusDao">
+	 <insert id="insertReturnId">
+		insert into status
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		 	<if test="inbox != null">
+		 		inbox,
+		 	</if>
+		 	<if test="bit_mail != null">
+		 		bit_mail,
+		 	</if>
+		 	<if test="send != null">
+		 		send,
+		 	</if>
+		 	<if test="deletes != null">
+		 		deletes,
+		 	</if>
+		 	<if test="garbage != null">
+		 		garbage,
+		 	</if>
+		 	<if test="draft != null">
+		 		draft,
+		 	</if>
+		 	<if test="asend != null">
+		 		asend,
+		 	</if>
+		 	<if test="unsend != null">
+		 		unsend,
+		 	</if>
+		 	<if test="afind != null">
+		 		afind,
+		 	</if>
+		 	<if test="unfind != null">
+		 		unfind,
+		 	</if>
+		 	<if test="group_mail != null">
+		 		group_mail,
+		 	</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+		 	<if test="inbox != null">
+		 		#{inbox},
+		 	</if>
+		 	<if test="bit_mail != null">
+		 		#{bit_mail},
+		 	</if>
+		 	<if test="send != null">
+		 		#{send},
+		 	</if>
+		 	<if test="deletes != null">
+		 		#{deletes},
+		 	</if>
+		 	<if test="garbage != null">
+		 		#{garbage},
+		 	</if>
+		 	<if test="draft != null">
+		 		#{draft},
+		 	</if>
+		 	<if test="asend != null">
+		 		#{asend},
+		 	</if>
+		 	<if test="unsend != null">
+		 		#{unsend},
+		 	</if>
+		 	<if test="afind != null">
+		 		#{afind},
+		 	</if>
+		 	<if test="unfind != null">
+		 		#{unfind},
+		 	</if>
+		 	<if test="group_mail != null">
+		 		#{group_mail},
+		 	</if>
+		 </trim>
+		<selectKey resultType="int" keyProperty="mail_status_id" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+ </mapper>

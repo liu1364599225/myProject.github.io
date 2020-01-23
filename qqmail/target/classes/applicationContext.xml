@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- spring管理SqlSession对象 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="jdbcDataSource"></property>
+        <property name="configLocation" value="classPath:mybatis.xml"></property>
+    </bean>
+    
+   <!--  引入外部的jdbc.properties -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classPath:jdbc.properties"></property>
+    </bean>
+    
+    <!-- 获得数据库jdbc连接对象 -->
+    <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         <property name="driverClassName" value="${driver}"></property>
+         <property name="url" value="${url}"></property>
+         <property name="username" value="${username}"></property>
+         <property name="password" value="${password}"></property>
+    </bean>
+    
+    <!--统一配置生成dao包下面的所有dao接口的对象 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+		<property name="basePackage" value="qqmail.dao" />
+	</bean>
+    
+    <!-- 生成service对象   罗松  -->
+	<bean id="userService" class="qqmail.service.impl.UserServiceImpl" />
+    <bean id="eventService" class="qqmail.service.impl.EventServiceImpl" />
+    <bean id="fileService" class="qqmail.service.impl.FileServiceImpl" />
+    <bean id="linkmanService" class="qqmail.service.impl.LinkManServiceImpl" />
+    
+    <!-- 刘波 -->
+	<bean id="mailService" class="qqmail.service.impl.MailServiceImpl" />
+	<bean id="linkmangroupService" class="qqmail.service.impl.LinkmangroupServiceImpl" />
+	<bean id="now_linkmanService" class="qqmail.service.impl.Now_linkmanServiceImpl" />
+	<bean id="statusService" class="qqmail.service.impl.StatusServiceImpl" />
+    <bean id="notepaperService" class="qqmail.service.impl.NotepaperServiceImpl" />
+    
+    
+    <!-- 童成 -->
+	<bean id="IStarServiceImpl" class="qqmail.service.impl.IStarServiceImpl">
+    	<property name="starDao" ref="IStarDao"></property>
+    </bean>
+    <bean id="IInboxServiceImpl" class="qqmail.service.impl.IInboxServiceImpl">
+    	<property name="inboxDao" ref="IInboxDao"></property>
+    </bean>
+    
+     <bean id="IGarbageServiceImpl" class="qqmail.service.impl.IGarbageServiceImpl">
+    	<property name="garbageDao" ref="IGarbageDao"></property>
+    </bean>
+    
+     <bean id="IDraftServiceImpl" class="qqmail.service.impl.IDraftServiceImpl">
+    	<property name="draftDao" ref="IDraftDao"></property>
+    </bean>
+    
+    <bean id="ISendServiceImpl" class="qqmail.service.impl.ISendServiceImpl">
+    	<property name="sendDao" ref="ISendDao"></property>
+    </bean>
+    
+    <bean id="IDeleteServiceImpl" class="qqmail.service.impl.IDeleteServiceImpl">
+    	<property name="deleteDao" ref="IDeleteDao"></property>
+    </bean>
+    
+    <bean id="IFlockServiceImpl" class="qqmail.service.impl.IFlockServiceImpl">
+    	<property name="flockDao" ref="IFlockDao"></property>
+    </bean>
+        
+	<!-- 文件上传Multipart解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="1024000000" />
+	</bean>
+    
+    <!-- 配置multipart解析器
+    <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+    </bean> -->
+    
+    <!-- 配置扫描器 -->
+    <context:component-scan base-package="qqmail.**" />
+    <mvc:annotation-driven />
+</beans>

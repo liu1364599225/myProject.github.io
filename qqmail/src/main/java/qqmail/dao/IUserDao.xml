@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.IUserDao">
+	<select id="proving" resultType="qqmail.entry.User">
+	   select * from user where user_account=#{0} and user_password=#{1}
+	</select>
+	
+	<update id="updatePass">
+	    update user set user_password=#{1} where user_account=#{0}
+	</update>
+	
+	<insert id="createUser">
+	    insert into user(nickname,user_account,user_password,user_tel) 
+	    values(#{nickname},#{user_account},#{user_password},#{user_tel})
+	</insert>
+	
+	<select id="readUserByAccount" resultType="qqmail.entry.User">
+	   select * from user where user_account=#{account}
+	</select>
+	
+	
+	
+	<select id="selectById" resultType="qqmail.entry.User">
+		select * from user where user_id=#{user_id}
+	</select>
+	
+	<select id="likeSelect" resultType="qqmail.entry.User">
+		SELECT u.* FROM USER u JOIN (SELECT linkman_id FROM linkman WHERE user_id=#{0}) l ON u.user_id = l.linkman_id 
+			AND CONCAT(u.nickname,u.user_account) LIKE '%' #{1} '%';
+	</select>
+	
+	<select id="selectByUser_account" resultType="qqmail.entry.User">
+		select * from user where user_account = #{user_account}
+	</select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qqmail.dao.IMailDao">
+	
+	<insert id="insert">
+	    insert into mail
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	     <if test="motive != null">
+	        motive,
+	     </if>
+	      <if test="main_body != null">
+	        main_body,
+	     </if>
+	      <if test="status_id != 0">
+	        status_id,
+	     </if>
+	      <if test="send_mail_id != 0">
+	        send_mail_id,
+	     </if>
+	      <if test="accept_mail_id != 0">
+	        accept_mail_id,
+	     </if>
+	      <if test="notepaper_id != 0">
+	        notepaper_id,
+	     </if>
+	     send_time,
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	     <if test="motive != null">
+	        #{motive},
+	     </if>
+	     <if test="main_body != null">
+	        #{main_body},
+	     </if>
+	     <if test="status_id != 0">
+	        #{status_id},
+	     </if>
+	     <if test="send_mail_id != 0">
+	        #{send_mail_id},
+	     </if>
+	     <if test="accept_mail_id != 0">
+	        #{accept_mail_id},
+	     </if>
+	     <if test="notepaper_id != 0">
+	        #{notepaper_id},
+	     </if>
+	     now(),
+		</trim>
+	</insert>
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.Order">
+    <id column="O_ID" jdbcType="DECIMAL" property="oId" />
+    <result column="U_ID" jdbcType="DECIMAL" property="uId" />
+    <result column="P_ID" jdbcType="DECIMAL" property="pId" />
+    <result column="O_FOSTERSTYLE" jdbcType="VARCHAR" property="oFosterstyle" />
+    <result column="O_FOSTERPLACEID" jdbcType="DECIMAL" property="oFosterplaceid" />
+    <result column="O_FOSTERDAY" jdbcType="DECIMAL" property="oFosterday" />
+    <result column="O_ORDERDATE" jdbcType="DATE" property="oOrderdate" />
+    <result column="O_ORDERSTATUS" jdbcType="VARCHAR" property="oOrderstatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    O_ID, U_ID, P_ID, O_FOSTERSTYLE, O_FOSTERPLACEID, O_FOSTERDAY, O_ORDERDATE, O_ORDERSTATUS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_ORDER
+    where O_ID = #{oId,jdbcType=DECIMAL} order by O_ORDERDATE DESC
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_ORDER order by O_ORDERDATE DESC
+  </select>
+  <select id="listByRefuse" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	select distinct p_id from p_order where o_orderstatus='拒单' and U_ID=#{uId,jdbcType=DECIMAL} and p_id not in (select p_id from p_order where o_orderstatus='待确认' or o_orderstatus='已挂起' or o_orderstatus='正在预约')
+  </select>
+  <select id="listByRequestStatus" resultMap="BaseResultMap">
+    select * from P_ORDER where O_ORDERSTATUS = #{0,jdbcType=VARCHAR} or O_ORDERSTATUS = #{1,jdbcType=VARCHAR} or O_ORDERSTATUS = #{2,jdbcType=VARCHAR}
+   </select>
+   <select id="listByOneRequestStatus" resultMap="BaseResultMap">
+    select * from P_ORDER where O_ORDERSTATUS = #{0,jdbcType=VARCHAR} and O_FOSTERSTYLE = #{1,jdbcType=VARCHAR} and O_FOSTERPLACEID = #{2,jdbcType=DECIMAL}
+   </select>
+   <select id="listBy1RequestStatus" resultMap="BaseResultMap">
+    select * from P_ORDER where O_ORDERSTATUS = #{requestStatus,jdbcType=VARCHAR} order by O_ORDERDATE DESC
+   </select>
+   <select id="listByfuId" resultMap="BaseResultMap">
+   	select * from P_ORDER where U_ID = #{fuId,jdbcType=DECIMAL} order by O_ORDERDATE DESC
+   </select>
+   <select id="listByoFosterplaceid" resultMap="BaseResultMap">
+   	select * from P_ORDER where O_FOSTERPLACEID = #{0,jdbcType=DECIMAL} and O_FOSTERSTYLE = #{1,jdbcType=VARCHAR} order by O_ORDERDATE DESC
+   </select>
+   <select id="listBypId" resultMap="BaseResultMap">
+   	select * from P_ORDER where P_ID = #{pId,jdbcType=DECIMAL} order by O_ORDERDATE DESC
+   </select>
+   <select id="deleteByfosterPlaceIdAndfosterStyle">
+   	delete from P_ORDER where O_FOSTERPLACEID = #{0,jdbcType=DECIMAL} and O_FOSTERSTYLE =  #{1,jdbcType=VARCHAR}
+   </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_ORDER
+    where O_ID = #{oId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.Order">
+    insert into P_ORDER (O_ID, U_ID, P_ID, 
+      O_FOSTERSTYLE, O_FOSTERPLACEID, O_FOSTERDAY, 
+      O_ORDERDATE, O_ORDERSTATUS)
+    values (seq_p_order_o_id, #{uId,jdbcType=DECIMAL}, #{pId,jdbcType=DECIMAL}, 
+      #{oFosterstyle,jdbcType=VARCHAR}, #{oFosterplaceid,jdbcType=DECIMAL}, #{oFosterday,jdbcType=DECIMAL}, 
+      #{oOrderdate,jdbcType=DATE}, #{oOrderstatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.Order">
+  		<selectKey keyProperty="oId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_order_o_id.nextval as fuId from DUAL
+        </selectKey>
+    insert into P_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        O_ID,
+      </if>
+      <if test="uId != null">
+        U_ID,
+      </if>
+      <if test="pId != null">
+        P_ID,
+      </if>
+      <if test="oFosterstyle != null">
+        O_FOSTERSTYLE,
+      </if>
+      <if test="oFosterplaceid != null">
+        O_FOSTERPLACEID,
+      </if>
+      <if test="oFosterday != null">
+        O_FOSTERDAY,
+      </if>
+        O_ORDERDATE,
+      <if test="oOrderstatus != null">
+        O_ORDERSTATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{oId,jdbcType=DECIMAL},
+     </if>
+      <if test="uId != null">
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="oFosterstyle != null">
+        #{oFosterstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="oFosterplaceid != null">
+        #{oFosterplaceid,jdbcType=DECIMAL},
+      </if>
+      <if test="oFosterday != null">
+        #{oFosterday,jdbcType=DECIMAL},
+      </if>
+        SYSDATE,
+      <if test="oOrderstatus != null">
+        #{oOrderstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.Order">
+    update P_ORDER
+    <set>
+      <if test="uId != null">
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="pId != null">
+        P_ID = #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="oFosterstyle != null">
+        O_FOSTERSTYLE = #{oFosterstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="oFosterplaceid != null">
+        O_FOSTERPLACEID = #{oFosterplaceid,jdbcType=DECIMAL},
+      </if>
+      <if test="oFosterday != null">
+        O_FOSTERDAY = #{oFosterday,jdbcType=DECIMAL},
+      </if>
+      <if test="oOrderdate != null">
+        O_ORDERDATE = #{oOrderdate,jdbcType=DATE},
+      </if>
+      <if test="oOrderstatus != null">
+        O_ORDERSTATUS = #{oOrderstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where O_ID = #{oId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.Order">
+    update P_ORDER
+    set U_ID = #{uId,jdbcType=DECIMAL},
+      P_ID = #{pId,jdbcType=DECIMAL},
+      O_FOSTERSTYLE = #{oFosterstyle,jdbcType=VARCHAR},
+      O_FOSTERPLACEID = #{oFosterplaceid,jdbcType=DECIMAL},
+      O_FOSTERDAY = #{oFosterday,jdbcType=DECIMAL},
+      O_ORDERDATE = #{oOrderdate,jdbcType=DATE},
+      O_ORDERSTATUS = #{oOrderstatus,jdbcType=VARCHAR}
+    where O_ID = #{oId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.PetShopMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.PetShop">
+    <id column="PS_ID" jdbcType="DECIMAL" property="psId" />
+    <result column="PS_ACCOUNTNAME" jdbcType="VARCHAR" property="psAccountname" />
+    <result column="PS_PASSWORD" jdbcType="VARCHAR" property="psPassword" />
+    <result column="PS_PETSHOPNAME" jdbcType="VARCHAR" property="psPetshopname" />
+    <result column="PS_CONTACTWAY" jdbcType="VARCHAR" property="psContactway" />
+    <result column="PS_ADDRESS" jdbcType="VARCHAR" property="psAddress" />
+    <result column="PS_PETSHOPPHOTO" jdbcType="VARCHAR" property="psPetshopphoto" />
+    <result column="PS_REQUESTSTATUS" jdbcType="VARCHAR" property="psRequeststatus" />
+    <result column="PS_TYPERANGE" jdbcType="VARCHAR" property="psTyperange" />
+    <result column="PS_FEEDBACKINFORMATION" jdbcType="VARCHAR" property="psFeedbackinformation" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PS_ID, PS_ACCOUNTNAME, PS_PASSWORD, PS_PETSHOPNAME, PS_CONTACTWAY, PS_ADDRESS, PS_PETSHOPPHOTO, 
+    PS_REQUESTSTATUS, PS_TYPERANGE, PS_FEEDBACKINFORMATION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_PETSHOP
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_PETSHOP
+  </select>
+  <select id="listByRequestStatus" resultMap="BaseResultMap">
+    select * from P_PETSHOP where PS_REQUESTSTATUS = #{requestStatus,jdbcType=VARCHAR}
+   </select>
+  <select id="listByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from P_PETSHOP where PS_ACCOUNTNAME = #{psAccountname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_PETSHOP
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.PetShop">
+    insert into P_PETSHOP (PS_ID, PS_ACCOUNTNAME, PS_PASSWORD, 
+      PS_PETSHOPNAME, PS_CONTACTWAY, PS_ADDRESS, 
+      PS_PETSHOPPHOTO, PS_REQUESTSTATUS, PS_TYPERANGE, 
+      PS_FEEDBACKINFORMATION)
+    values (seq_p_petShop_ps_id, #{psAccountname,jdbcType=VARCHAR}, #{psPassword,jdbcType=VARCHAR}, 
+      #{psPetshopname,jdbcType=VARCHAR}, #{psContactway,jdbcType=VARCHAR}, #{psAddress,jdbcType=VARCHAR}, 
+      #{psPetshopphoto,jdbcType=VARCHAR}, #{psRequeststatus,jdbcType=VARCHAR}, #{psTyperange,jdbcType=VARCHAR}, 
+      #{psFeedbackinformation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.PetShop">
+  		<selectKey keyProperty="psId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_petShop_ps_id.nextval as fuId from DUAL
+        </selectKey>
+    insert into P_PETSHOP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        PS_ID,
+      </if>
+      <if test="psAccountname != null">
+        PS_ACCOUNTNAME,
+      </if>
+      <if test="psPassword != null">
+        PS_PASSWORD,
+      </if>
+      <if test="psPetshopname != null">
+        PS_PETSHOPNAME,
+      </if>
+      <if test="psContactway != null">
+        PS_CONTACTWAY,
+      </if>
+      <if test="psAddress != null">
+        PS_ADDRESS,
+      </if>
+      <if test="psPetshopphoto != null">
+        PS_PETSHOPPHOTO,
+      </if>
+      <if test="psRequeststatus != null">
+        PS_REQUESTSTATUS,
+      </if>
+      <if test="psTyperange != null">
+        PS_TYPERANGE,
+      </if>
+      <if test="psFeedbackinformation != null">
+        PS_FEEDBACKINFORMATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        #{psId,jdbcType=DECIMAL},
+      </if>
+      <if test="psAccountname != null">
+        #{psAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="psPassword != null">
+        #{psPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="psPetshopname != null">
+        #{psPetshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="psContactway != null">
+        #{psContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="psAddress != null">
+        #{psAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="psPetshopphoto != null">
+        #{psPetshopphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="psRequeststatus != null">
+        #{psRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="psTyperange != null">
+        #{psTyperange,jdbcType=VARCHAR},
+      </if>
+      <if test="psFeedbackinformation != null">
+        #{psFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.PetShop">
+    update P_PETSHOP
+    <set>
+      <if test="psAccountname != null">
+        PS_ACCOUNTNAME = #{psAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="psPassword != null">
+        PS_PASSWORD = #{psPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="psPetshopname != null">
+        PS_PETSHOPNAME = #{psPetshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="psContactway != null">
+        PS_CONTACTWAY = #{psContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="psAddress != null">
+        PS_ADDRESS = #{psAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="psPetshopphoto != null">
+        PS_PETSHOPPHOTO = #{psPetshopphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="psRequeststatus != null">
+        PS_REQUESTSTATUS = #{psRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="psTyperange != null">
+        PS_TYPERANGE = #{psTyperange,jdbcType=VARCHAR},
+      </if>
+      <if test="psFeedbackinformation != null">
+        PS_FEEDBACKINFORMATION = #{psFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.PetShop">
+    update P_PETSHOP
+    set PS_ACCOUNTNAME = #{psAccountname,jdbcType=VARCHAR},
+      PS_PASSWORD = #{psPassword,jdbcType=VARCHAR},
+      PS_PETSHOPNAME = #{psPetshopname,jdbcType=VARCHAR},
+      PS_CONTACTWAY = #{psContactway,jdbcType=VARCHAR},
+      PS_ADDRESS = #{psAddress,jdbcType=VARCHAR},
+      PS_PETSHOPPHOTO = #{psPetshopphoto,jdbcType=VARCHAR},
+      PS_REQUESTSTATUS = #{psRequeststatus,jdbcType=VARCHAR},
+      PS_TYPERANGE = #{psTyperange,jdbcType=VARCHAR},
+      PS_FEEDBACKINFORMATION = #{psFeedbackinformation,jdbcType=VARCHAR}
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </update>
+</mapper>

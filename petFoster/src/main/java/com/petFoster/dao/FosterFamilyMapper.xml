@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.FosterFamilyMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.FosterFamily">
+    <id column="F_ID" jdbcType="DECIMAL" property="fId" />
+    <result column="F_ACCOUNTNAME" jdbcType="VARCHAR" property="fAccountname" />
+    <result column="F_PASSWORD" jdbcType="VARCHAR" property="fPassword" />
+    <result column="F_ADOPTERNAME" jdbcType="VARCHAR" property="fAdoptername" />
+    <result column="F_ADOPTERSEX" jdbcType="CHAR" property="fAdoptersex" />
+    <result column="F_FOSTEREXPERIENCE" jdbcType="VARCHAR" property="fFosterexperience" />
+    <result column="F_CONTACTWAY" jdbcType="VARCHAR" property="fContactway" />
+    <result column="F_ADDRESS" jdbcType="VARCHAR" property="fAddress" />
+    <result column="F_FAMILYPHOTO" jdbcType="VARCHAR" property="fFamilyphoto" />
+    <result column="F_REQUESTSTATUS" jdbcType="VARCHAR" property="fRequeststatus" />
+    <result column="F_TYPERANGE" jdbcType="VARCHAR" property="fTyperange" />
+    <result column="F_FEEDBACKINFORMATION" jdbcType="VARCHAR" property="fFeedbackinformation" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    F_ID, F_ACCOUNTNAME, F_PASSWORD, F_ADOPTERNAME, F_ADOPTERSEX, F_FOSTEREXPERIENCE, 
+    F_CONTACTWAY, F_ADDRESS, F_FAMILYPHOTO, F_REQUESTSTATUS, F_TYPERANGE, F_FEEDBACKINFORMATION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_FOSTERFAMILY
+    where F_ID = #{fId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_FOSTERFAMILY
+  </select>
+   <select id="listByRequestStatus" resultMap="BaseResultMap">
+    select * from P_FOSTERFAMILY where F_REQUESTSTATUS = #{requestStatus,jdbcType=VARCHAR}
+   </select>
+  
+  <select id="listByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from P_FOSTERFAMILY where F_ACCOUNTNAME = #{fAccountname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_FOSTERFAMILY
+    where F_ID = #{fId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.FosterFamily">
+    insert into P_FOSTERFAMILY (F_ID, F_ACCOUNTNAME, F_PASSWORD, 
+      F_ADOPTERNAME, F_ADOPTERSEX, F_FOSTEREXPERIENCE, 
+      F_CONTACTWAY, F_ADDRESS, F_FAMILYPHOTO, 
+      F_REQUESTSTATUS, F_TYPERANGE, F_FEEDBACKINFORMATION
+      )
+    values (seq_p_fosterFamily_f_id, #{fAccountname,jdbcType=VARCHAR}, #{fPassword,jdbcType=VARCHAR}, 
+      #{fAdoptername,jdbcType=VARCHAR}, #{fAdoptersex,jdbcType=CHAR}, #{fFosterexperience,jdbcType=VARCHAR}, 
+      #{fContactway,jdbcType=VARCHAR}, #{fAddress,jdbcType=VARCHAR}, #{fFamilyphoto,jdbcType=VARCHAR}, 
+      #{fRequeststatus,jdbcType=VARCHAR}, #{fTyperange,jdbcType=VARCHAR}, #{fFeedbackinformation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.FosterFamily">
+  		<selectKey keyProperty="fId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_fosterFamily_f_id.nextval as fuId from DUAL
+        </selectKey>
+    insert into P_FOSTERFAMILY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        F_ID,
+      </if>
+      <if test="fAccountname != null">
+        F_ACCOUNTNAME,
+      </if>
+      <if test="fPassword != null">
+        F_PASSWORD,
+      </if>
+      <if test="fAdoptername != null">
+        F_ADOPTERNAME,
+      </if>
+      <if test="fAdoptersex != null">
+        F_ADOPTERSEX,
+      </if>
+      <if test="fFosterexperience != null">
+        F_FOSTEREXPERIENCE,
+      </if>
+      <if test="fContactway != null">
+        F_CONTACTWAY,
+      </if>
+      <if test="fAddress != null">
+        F_ADDRESS,
+      </if>
+      <if test="fFamilyphoto != null">
+        F_FAMILYPHOTO,
+      </if>
+      <if test="fRequeststatus != null">
+        F_REQUESTSTATUS,
+      </if>
+      <if test="fTyperange != null">
+        F_TYPERANGE,
+      </if>
+      <if test="fFeedbackinformation != null">
+        F_FEEDBACKINFORMATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fId != null">
+        #{fId,jdbcType=DECIMAL},
+      </if>
+      <if test="fAccountname != null">
+        #{fAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="fPassword != null">
+        #{fPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fAdoptername != null">
+        #{fAdoptername,jdbcType=VARCHAR},
+      </if>
+      <if test="fAdoptersex != null">
+        #{fAdoptersex,jdbcType=CHAR},
+      </if>
+      <if test="fFosterexperience != null">
+        #{fFosterexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="fContactway != null">
+        #{fContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="fAddress != null">
+        #{fAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fFamilyphoto != null">
+        #{fFamilyphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="fRequeststatus != null">
+        #{fRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fTyperange != null">
+        #{fTyperange,jdbcType=VARCHAR},
+      </if>
+      <if test="fFeedbackinformation != null">
+        #{fFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.FosterFamily">
+    update P_FOSTERFAMILY
+    <set>
+      <if test="fAccountname != null">
+        F_ACCOUNTNAME = #{fAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="fPassword != null">
+        F_PASSWORD = #{fPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fAdoptername != null">
+        F_ADOPTERNAME = #{fAdoptername,jdbcType=VARCHAR},
+      </if>
+      <if test="fAdoptersex != null">
+        F_ADOPTERSEX = #{fAdoptersex,jdbcType=CHAR},
+      </if>
+      <if test="fFosterexperience != null">
+        F_FOSTEREXPERIENCE = #{fFosterexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="fContactway != null">
+        F_CONTACTWAY = #{fContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="fAddress != null">
+        F_ADDRESS = #{fAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fFamilyphoto != null">
+        F_FAMILYPHOTO = #{fFamilyphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="fRequeststatus != null">
+        F_REQUESTSTATUS = #{fRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fTyperange != null">
+        F_TYPERANGE = #{fTyperange,jdbcType=VARCHAR},
+      </if>
+      <if test="fFeedbackinformation != null">
+        F_FEEDBACKINFORMATION = #{fFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_ID = #{fId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.FosterFamily">
+    update P_FOSTERFAMILY
+    set F_ACCOUNTNAME = #{fAccountname,jdbcType=VARCHAR},
+      F_PASSWORD = #{fPassword,jdbcType=VARCHAR},
+      F_ADOPTERNAME = #{fAdoptername,jdbcType=VARCHAR},
+      F_ADOPTERSEX = #{fAdoptersex,jdbcType=CHAR},
+      F_FOSTEREXPERIENCE = #{fFosterexperience,jdbcType=VARCHAR},
+      F_CONTACTWAY = #{fContactway,jdbcType=VARCHAR},
+      F_ADDRESS = #{fAddress,jdbcType=VARCHAR},
+      F_FAMILYPHOTO = #{fFamilyphoto,jdbcType=VARCHAR},
+      F_REQUESTSTATUS = #{fRequeststatus,jdbcType=VARCHAR},
+      F_TYPERANGE = #{fTyperange,jdbcType=VARCHAR},
+      F_FEEDBACKINFORMATION = #{fFeedbackinformation,jdbcType=VARCHAR}
+    where F_ID = #{fId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.FosterUserMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.FosterUser">
+    <id column="FU_ID" jdbcType="DECIMAL" property="fuId" />
+    <result column="FU_ACCOUNTNAME" jdbcType="VARCHAR" property="fuAccountname" />
+    <result column="FU_PASSWORD" jdbcType="VARCHAR" property="fuPassword" />
+    <result column="FU_FOSTERUSERNAME" jdbcType="VARCHAR" property="fuFosterusername" />
+    <result column="FU_FOSTERUSERSEX" jdbcType="CHAR" property="fuFosterusersex" />
+    <result column="FU_CONTACTWAY" jdbcType="VARCHAR" property="fuContactway" />
+    <result column="FU_ADDRESS" jdbcType="VARCHAR" property="fuAddress" />
+    <result column="FU_REQUESTSTATUS" jdbcType="VARCHAR" property="fuRequeststatus" />
+    <result column="FU_FEEDBACKINFORMATION" jdbcType="VARCHAR" property="fuFeedbackinformation" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FU_ID, FU_ACCOUNTNAME, FU_PASSWORD, FU_FOSTERUSERNAME, FU_FOSTERUSERSEX, FU_CONTACTWAY, 
+    FU_ADDRESS, FU_REQUESTSTATUS, FU_FEEDBACKINFORMATION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_FOSTERUSER
+    where FU_ID = #{fuId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_FOSTERUSER
+  </select>
+  <select id="listByRequestStatus" resultMap="BaseResultMap">
+    select * from P_FOSTERUSER where FU_REQUESTSTATUS = #{requestStatus,jdbcType=VARCHAR}
+   </select>
+  <select id="listByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from P_FOSTERUSER where FU_ACCOUNTNAME = #{fuAccountname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_FOSTERUSER
+    where FU_ID = #{fuId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.FosterUser">
+    insert into P_FOSTERUSER (FU_ID, FU_ACCOUNTNAME, FU_PASSWORD, 
+      FU_FOSTERUSERNAME, FU_FOSTERUSERSEX, FU_CONTACTWAY, 
+      FU_ADDRESS, FU_REQUESTSTATUS, FU_FEEDBACKINFORMATION
+      )
+    values (seq_p_fosterUser_fu_id, #{fuAccountname,jdbcType=VARCHAR}, #{fuPassword,jdbcType=VARCHAR}, 
+      #{fuFosterusername,jdbcType=VARCHAR}, #{fuFosterusersex,jdbcType=CHAR}, #{fuContactway,jdbcType=VARCHAR}, 
+      #{fuAddress,jdbcType=VARCHAR}, #{fuRequeststatus,jdbcType=VARCHAR}, #{fuFeedbackinformation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.FosterUser">
+  		<selectKey keyProperty="fuId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_fosterUser_fu_id.nextval as fuId from DUAL
+        </selectKey>
+    insert into P_FOSTERUSER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fuId != null">
+        FU_ID,
+      </if>
+      <if test="fuAccountname != null">
+        FU_ACCOUNTNAME,
+      </if>
+      <if test="fuPassword != null">
+        FU_PASSWORD,
+      </if>
+      <if test="fuFosterusername != null">
+        FU_FOSTERUSERNAME,
+      </if>
+      <if test="fuFosterusersex != null">
+        FU_FOSTERUSERSEX,
+      </if>
+      <if test="fuContactway != null">
+        FU_CONTACTWAY,
+      </if>
+      <if test="fuAddress != null">
+        FU_ADDRESS,
+      </if>
+      <if test="fuRequeststatus != null">
+        FU_REQUESTSTATUS,
+      </if>
+      <if test="fuFeedbackinformation != null">
+        FU_FEEDBACKINFORMATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fuId != null">
+        #{fuId,jdbcType=DECIMAL},
+	  </if>
+      <if test="fuAccountname != null">
+        #{fuAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="fuPassword != null">
+        #{fuPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFosterusername != null">
+        #{fuFosterusername,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFosterusersex != null">
+        #{fuFosterusersex,jdbcType=CHAR},
+      </if>
+      <if test="fuContactway != null">
+        #{fuContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="fuAddress != null">
+        #{fuAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fuRequeststatus != null">
+        #{fuRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFeedbackinformation != null">
+        #{fuFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.FosterUser">
+    update P_FOSTERUSER
+    <set>
+      <if test="fuAccountname != null">
+        FU_ACCOUNTNAME = #{fuAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="fuPassword != null">
+        FU_PASSWORD = #{fuPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFosterusername != null">
+        FU_FOSTERUSERNAME = #{fuFosterusername,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFosterusersex != null">
+        FU_FOSTERUSERSEX = #{fuFosterusersex,jdbcType=CHAR},
+      </if>
+      <if test="fuContactway != null">
+        FU_CONTACTWAY = #{fuContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="fuAddress != null">
+        FU_ADDRESS = #{fuAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fuRequeststatus != null">
+        FU_REQUESTSTATUS = #{fuRequeststatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fuFeedbackinformation != null">
+        FU_FEEDBACKINFORMATION = #{fuFeedbackinformation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FU_ID = #{fuId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.FosterUser">
+    update P_FOSTERUSER
+    set FU_ACCOUNTNAME = #{fuAccountname,jdbcType=VARCHAR},
+      FU_PASSWORD = #{fuPassword,jdbcType=VARCHAR},
+      FU_FOSTERUSERNAME = #{fuFosterusername,jdbcType=VARCHAR},
+      FU_FOSTERUSERSEX = #{fuFosterusersex,jdbcType=CHAR},
+      FU_CONTACTWAY = #{fuContactway,jdbcType=VARCHAR},
+      FU_ADDRESS = #{fuAddress,jdbcType=VARCHAR},
+      FU_REQUESTSTATUS = #{fuRequeststatus,jdbcType=VARCHAR},
+      FU_FEEDBACKINFORMATION = #{fuFeedbackinformation,jdbcType=VARCHAR}
+    where FU_ID = #{fuId,jdbcType=DECIMAL}
+  </update>
+</mapper>

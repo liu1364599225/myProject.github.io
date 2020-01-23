@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.ManagerMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.Manager">
+    <id column="M_ID" jdbcType="DECIMAL" property="mId" />
+    <result column="M_ACCOUNTNAME" jdbcType="VARCHAR" property="mAccountname" />
+    <result column="M_PASSWORD" jdbcType="VARCHAR" property="mPassword" />
+    <result column="M_MANAGERNAME" jdbcType="VARCHAR" property="mManagername" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    M_ID, M_ACCOUNTNAME, M_PASSWORD, M_MANAGERNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_MANAGER
+    where M_ID = #{mId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_MANAGER
+  </select>
+  <select id="listByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from P_MANAGER where M_ACCOUNTNAME = #{mAccountname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_MANAGER
+    where M_ID = #{mId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.Manager">
+    insert into P_MANAGER (M_ID, M_ACCOUNTNAME, M_PASSWORD, 
+      M_MANAGERNAME)
+    values (seq_p_manager_m_id, #{mAccountname,jdbcType=VARCHAR}, #{mPassword,jdbcType=VARCHAR}, 
+      #{mManagername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.Manager">
+    insert into P_MANAGER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        M_ID,
+      <if test="mAccountname != null">
+        M_ACCOUNTNAME,
+      </if>
+      <if test="mPassword != null">
+        M_PASSWORD,
+      </if>
+      <if test="mManagername != null">
+        M_MANAGERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <choose>
+      	<when test="mId != null">
+        	#{mId,jdbcType=DECIMAL},
+     	</when>
+     	<otherwise>
+     		seq_p_manager_m_id,
+     	</otherwise>
+      </choose>
+      <if test="mAccountname != null">
+        #{mAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="mPassword != null">
+        #{mPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mManagername != null">
+        #{mManagername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.Manager">
+    update P_MANAGER
+    <set>
+      <if test="mAccountname != null">
+        M_ACCOUNTNAME = #{mAccountname,jdbcType=VARCHAR},
+      </if>
+      <if test="mPassword != null">
+        M_PASSWORD = #{mPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mManagername != null">
+        M_MANAGERNAME = #{mManagername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where M_ID = #{mId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.Manager">
+    update P_MANAGER
+    set M_ACCOUNTNAME = #{mAccountname,jdbcType=VARCHAR},
+      M_PASSWORD = #{mPassword,jdbcType=VARCHAR},
+      M_MANAGERNAME = #{mManagername,jdbcType=VARCHAR}
+    where M_ID = #{mId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.InformationMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.Information">
+    <id column="I_ID" jdbcType="DECIMAL" property="iId" />
+    <result column="I_ENVIRONMENT" jdbcType="VARCHAR" property="iEnvironment" />
+    <result column="I_FOSTERCARE" jdbcType="DECIMAL" property="iFostercare" />
+    <result column="I_PICKUPSERVICE" jdbcType="DECIMAL" property="iPickupservice" />
+    <result column="I_DESCRIBE" jdbcType="VARCHAR" property="iDescribe" />
+    <result column="I_NEEDTOKNOW" jdbcType="VARCHAR" property="iNeedtoknow" />
+    <result column="I_CSHOTLINE" jdbcType="VARCHAR" property="iCshotline" />
+    <result column="I_FOSTERSTYLE" jdbcType="VARCHAR" property="iFosterstyle" />
+    <result column="I_FOSTERPLACEID" jdbcType="DECIMAL" property="iFosterplaceid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    I_ID, I_ENVIRONMENT, I_FOSTERCARE, I_PICKUPSERVICE, I_DESCRIBE, I_NEEDTOKNOW, I_CSHOTLINE, 
+    I_FOSTERSTYLE, I_FOSTERPLACEID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_INFORMATION
+    where I_ID = #{iId,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="selectByFosterplaceidAndFosterstyle" resultMap="BaseResultMap">
+  	select * from P_INFORMATION where I_FOSTERPLACEID = #{0,jdbcType=DECIMAL} and I_FOSTERSTYLE = #{1,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_INFORMATION
+    where I_ID = #{iId,jdbcType=DECIMAL}
+  </delete>
+  
+  <delete id="deleteByFosterplaceidAndFosterStyle">
+    delete from P_INFORMATION where I_FOSTERPLACEID = #{0,jdbcType=DECIMAL} and I_FOSTERSTYLE = #{1,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.Information">
+    insert into P_INFORMATION (I_ID, I_ENVIRONMENT, I_FOSTERCARE, 
+      I_PICKUPSERVICE, I_DESCRIBE, I_NEEDTOKNOW, 
+      I_CSHOTLINE, I_FOSTERSTYLE, I_FOSTERPLACEID
+      )
+    values (seq_p_information_i_id, #{iEnvironment,jdbcType=VARCHAR}, #{iFostercare,jdbcType=DECIMAL}, 
+      #{iPickupservice,jdbcType=DECIMAL}, #{iDescribe,jdbcType=VARCHAR}, #{iNeedtoknow,jdbcType=VARCHAR}, 
+      #{iCshotline,jdbcType=VARCHAR}, #{iFosterstyle,jdbcType=VARCHAR}, #{iFosterplaceid,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.Information">
+  		<selectKey keyProperty="iId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_information_i_id.nextval as fuId from DUAL
+        </selectKey>
+    insert into P_INFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        I_ID,
+      </if>
+      <if test="iEnvironment != null">
+        I_ENVIRONMENT,
+      </if>
+      <if test="iFostercare != null">
+        I_FOSTERCARE,
+      </if>
+      <if test="iPickupservice != null">
+        I_PICKUPSERVICE,
+      </if>
+      <if test="iDescribe != null">
+        I_DESCRIBE,
+      </if>
+      <if test="iNeedtoknow != null">
+        I_NEEDTOKNOW,
+      </if>
+      <if test="iCshotline != null">
+        I_CSHOTLINE,
+      </if>
+      <if test="iFosterstyle != null">
+        I_FOSTERSTYLE,
+      </if>
+      <if test="iFosterplaceid != null">
+        I_FOSTERPLACEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        #{iId,jdbcType=DECIMAL},
+      </if>
+      <if test="iEnvironment != null">
+        #{iEnvironment,jdbcType=VARCHAR},
+      </if>
+      <if test="iFostercare != null">
+        #{iFostercare,jdbcType=DECIMAL},
+      </if>
+      <if test="iPickupservice != null">
+        #{iPickupservice,jdbcType=DECIMAL},
+      </if>
+      <if test="iDescribe != null">
+        #{iDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="iNeedtoknow != null">
+        #{iNeedtoknow,jdbcType=VARCHAR},
+      </if>
+      <if test="iCshotline != null">
+        #{iCshotline,jdbcType=VARCHAR},
+      </if>
+      <if test="iFosterstyle != null">
+        #{iFosterstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="iFosterplaceid != null">
+        #{iFosterplaceid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.Information">
+    update P_INFORMATION
+    <set>
+      <if test="iEnvironment != null">
+        I_ENVIRONMENT = #{iEnvironment,jdbcType=VARCHAR},
+      </if>
+      <if test="iFostercare != null">
+        I_FOSTERCARE = #{iFostercare,jdbcType=DECIMAL},
+      </if>
+      <if test="iPickupservice != null">
+        I_PICKUPSERVICE = #{iPickupservice,jdbcType=DECIMAL},
+      </if>
+      <if test="iDescribe != null">
+        I_DESCRIBE = #{iDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="iNeedtoknow != null">
+        I_NEEDTOKNOW = #{iNeedtoknow,jdbcType=VARCHAR},
+      </if>
+      <if test="iCshotline != null">
+        I_CSHOTLINE = #{iCshotline,jdbcType=VARCHAR},
+      </if>
+      <if test="iFosterstyle != null">
+        I_FOSTERSTYLE = #{iFosterstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="iFosterplaceid != null">
+        I_FOSTERPLACEID = #{iFosterplaceid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where I_ID = #{iId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.Information">
+    update P_INFORMATION
+    set I_ENVIRONMENT = #{iEnvironment,jdbcType=VARCHAR},
+      I_FOSTERCARE = #{iFostercare,jdbcType=DECIMAL},
+      I_PICKUPSERVICE = #{iPickupservice,jdbcType=DECIMAL},
+      I_DESCRIBE = #{iDescribe,jdbcType=VARCHAR},
+      I_NEEDTOKNOW = #{iNeedtoknow,jdbcType=VARCHAR},
+      I_CSHOTLINE = #{iCshotline,jdbcType=VARCHAR},
+      I_FOSTERSTYLE = #{iFosterstyle,jdbcType=VARCHAR},
+      I_FOSTERPLACEID = #{iFosterplaceid,jdbcType=DECIMAL}
+    where I_ID = #{iId,jdbcType=DECIMAL}
+  </update>
+</mapper>

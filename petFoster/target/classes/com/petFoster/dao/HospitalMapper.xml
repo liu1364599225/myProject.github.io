@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.HospitalMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.Hospital">
+    <id column="H_ID" jdbcType="DECIMAL" property="hId" />
+    <result column="H_HOSPITALNAME" jdbcType="VARCHAR" property="hHospitalname" />
+    <result column="H__CONTACTWAY" jdbcType="VARCHAR" property="hContactway" />
+    <result column="H_ADDRESS" jdbcType="VARCHAR" property="hAddress" />
+    <result column="H_BUSINESSHOURS" jdbcType="VARCHAR" property="hBusinesshours" />
+    <result column="H_HOSPITALPHOTO" jdbcType="VARCHAR" property="hHospitalphoto" />
+    <result column="H_SERVICEINTRODUCTION" jdbcType="VARCHAR" property="hServiceintroduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    H_ID, H_HOSPITALNAME, H__CONTACTWAY, H_ADDRESS, H_BUSINESSHOURS, H_HOSPITALPHOTO, 
+    H_SERVICEINTRODUCTION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_HOSPITAL
+    where H_ID = #{hId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_HOSPITAL
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_HOSPITAL
+    where H_ID = #{hId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.Hospital">
+    insert into P_HOSPITAL (H_ID, H_HOSPITALNAME, H__CONTACTWAY, 
+      H_ADDRESS, H_BUSINESSHOURS, H_HOSPITALPHOTO, 
+      H_SERVICEINTRODUCTION)
+    values (seq_p_hospital_h_id, #{hHospitalname,jdbcType=VARCHAR}, #{hContactway,jdbcType=VARCHAR}, 
+      #{hAddress,jdbcType=VARCHAR}, #{hBusinesshours,jdbcType=VARCHAR}, #{hHospitalphoto,jdbcType=VARCHAR}, 
+      #{hServiceintroduction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.Hospital">
+  		<selectKey keyProperty="hId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_hospital_h_id.nextval as hId from DUAL
+        </selectKey>
+    insert into P_HOSPITAL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        H_ID,
+      <if test="hHospitalname != null">
+        H_HOSPITALNAME,
+      </if>
+      <if test="hContactway != null">
+        H__CONTACTWAY,
+      </if>
+      <if test="hAddress != null">
+        H_ADDRESS,
+      </if>
+      <if test="hBusinesshours != null">
+        H_BUSINESSHOURS,
+      </if>
+      <if test="hHospitalphoto != null">
+        H_HOSPITALPHOTO,
+      </if>
+      <if test="hServiceintroduction != null">
+        H_SERVICEINTRODUCTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hId != null">
+        #{hId,jdbcType=DECIMAL},
+      </if>
+      <if test="hHospitalname != null">
+        #{hHospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="hContactway != null">
+        #{hContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddress != null">
+        #{hAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hBusinesshours != null">
+        #{hBusinesshours,jdbcType=VARCHAR},
+      </if>
+      <if test="hHospitalphoto != null">
+        #{hHospitalphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="hServiceintroduction != null">
+        #{hServiceintroduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.Hospital">
+    update P_HOSPITAL
+    <set>
+      <if test="hHospitalname != null">
+        H_HOSPITALNAME = #{hHospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="hContactway != null">
+        H__CONTACTWAY = #{hContactway,jdbcType=VARCHAR},
+      </if>
+      <if test="hAddress != null">
+        H_ADDRESS = #{hAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hBusinesshours != null">
+        H_BUSINESSHOURS = #{hBusinesshours,jdbcType=VARCHAR},
+      </if>
+      <if test="hHospitalphoto != null">
+        H_HOSPITALPHOTO = #{hHospitalphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="hServiceintroduction != null">
+        H_SERVICEINTRODUCTION = #{hServiceintroduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where H_ID = #{hId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.Hospital">
+    update P_HOSPITAL
+    set H_HOSPITALNAME = #{hHospitalname,jdbcType=VARCHAR},
+      H__CONTACTWAY = #{hContactway,jdbcType=VARCHAR},
+      H_ADDRESS = #{hAddress,jdbcType=VARCHAR},
+      H_BUSINESSHOURS = #{hBusinesshours,jdbcType=VARCHAR},
+      H_HOSPITALPHOTO = #{hHospitalphoto,jdbcType=VARCHAR},
+      H_SERVICEINTRODUCTION = #{hServiceintroduction,jdbcType=VARCHAR}
+    where H_ID = #{hId,jdbcType=DECIMAL}
+  </update>
+</mapper>

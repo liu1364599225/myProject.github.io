@@ -1,0 +1,90 @@
+body{
+	margin: 0;
+	background-color: darkslategray;
+}
+
+#top{
+	height: 80px;
+	line-height: 80px;
+	margin-top: 50px;
+	padding: 0px;
+}
+
+#logo-img{
+	color: darkgoldenrod;
+	font-size: 50px;
+}
+
+#sytemName{
+	font-size: 24px;
+	color: white;
+	margin-left: 10px;
+}
+
+#top-navigation{
+	width: 650px;
+	height: 100%;
+	float: right;
+}
+
+#top-navigation-name{
+	width: 180px;
+	height: 100%;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	float: left;
+	
+}
+
+#top-navigation a{
+	font-size: 16px;
+	margin-left: 15px;
+}
+
+#search{
+	width: 100%;
+	background-color: gainsboro;
+	float: left;
+}
+
+.search-title{
+	font-size: 16px;
+}
+
+#petShop{
+	display: none;
+}
+
+#fosterFamilyTitle{
+	width: 100%;
+	float: left;
+	margin-top: 10px;
+}
+
+.fosterFamilyList-title{
+	font-size: 16px;
+	padding: 0px;
+	text-align: center;
+}
+
+.addAndsub{
+	font-size: 20px;
+}
+
+#fosterFamilyList{
+	width: 100%;
+	float: left;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.fosterFamilyList-text{
+	font-size: 14px;
+	height: 60px;
+	line-height: 60px;
+	color: gray;
+	padding: 0px;
+	text-align: center;
+}
+

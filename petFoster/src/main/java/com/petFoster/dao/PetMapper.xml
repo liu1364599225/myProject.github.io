@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petFoster.dao.PetMapper">
+  <resultMap id="BaseResultMap" type="com.petFoster.domain.Pet">
+    <id column="P_ID" jdbcType="DECIMAL" property="pId" />
+    <result column="P_PETNAME" jdbcType="VARCHAR" property="pPetname" />
+    <result column="P_SEX" jdbcType="CHAR" property="pSex" />
+    <result column="P_TYPE" jdbcType="VARCHAR" property="pType" />
+    <result column="FU_ID" jdbcType="DECIMAL" property="fuId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    P_ID, P_PETNAME, P_SEX, P_TYPE, FU_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from P_PET
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByAll" resultMap="BaseResultMap">
+  	select * from P_PET
+  </select>
+  <select id="selectByfuId" resultMap="BaseResultMap">
+  	select * from P_PET where FU_ID = #{fuId,jdbcType=DECIMAL}
+  </select>
+  <select id="listByPetNameAndFuId" resultMap="BaseResultMap">
+  	select * from P_PET where FU_ID = #{0} and P_PETNAME = #{1}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from P_PET
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.petFoster.domain.Pet">
+    insert into P_PET (P_ID, P_PETNAME, P_SEX, 
+      P_TYPE, FU_ID)
+    values (seq_p_pet_p_id.nextval,#{pPetname,jdbcType=VARCHAR}, #{pSex,jdbcType=CHAR}, 
+      #{pType,jdbcType=VARCHAR}, #{fuId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.petFoster.domain.Pet">
+  		<selectKey keyProperty="pId" order="BEFORE" resultType="java.lang.Long">
+            select seq_p_pet_p_id.nextval as pId from DUAL
+        </selectKey>
+    insert into P_PET
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        P_ID,
+      </if>
+      <if test="pPetname != null">
+        P_PETNAME,
+      </if>
+      <if test="pSex != null">
+        P_SEX,
+      </if>
+      <if test="pType != null">
+        P_TYPE,
+      </if>
+      <if test="fuId != null">
+        FU_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="pPetname != null">
+        #{pPetname,jdbcType=VARCHAR},
+      </if>
+      <if test="pSex != null">
+        #{pSex,jdbcType=CHAR},
+      </if>
+      <if test="pType != null">
+        #{pType,jdbcType=VARCHAR},
+      </if>
+      <if test="fuId != null">
+        #{fuId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.petFoster.domain.Pet">
+    update P_PET
+    <set>
+      <if test="pPetname != null">
+        P_PETNAME = #{pPetname,jdbcType=VARCHAR},
+      </if>
+      <if test="pSex != null">
+        P_SEX = #{pSex,jdbcType=CHAR},
+      </if>
+      <if test="pType != null">
+        P_TYPE = #{pType,jdbcType=VARCHAR},
+      </if>
+      <if test="fuId != null">
+        FU_ID = #{fuId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.petFoster.domain.Pet">
+    update P_PET
+    set P_PETNAME = #{pPetname,jdbcType=VARCHAR},
+      P_SEX = #{pSex,jdbcType=CHAR},
+      P_TYPE = #{pType,jdbcType=VARCHAR},
+      FU_ID = #{fuId,jdbcType=DECIMAL}
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.RelevanceMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Relevance">
+    <id column="relevance_id" jdbcType="INTEGER" property="relevanceId" />
+    <result column="song_id" jdbcType="INTEGER" property="songId" />
+    <result column="songlist_id" jdbcType="INTEGER" property="songlistId" />
+    <result column="relevance_rsrv1" jdbcType="VARCHAR" property="relevanceRsrv1" />
+    <result column="relevance_rsrv2" jdbcType="VARCHAR" property="relevanceRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    relevance_id, song_id, songlist_id, relevance_rsrv1, relevance_rsrv2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relevance
+    where relevance_id = #{relevanceId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="listAllBySonglistId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relevance
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relevance
+    where relevance_id = #{relevanceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Relevance">
+    insert into relevance (relevance_id, song_id, songlist_id, 
+      relevance_rsrv1, relevance_rsrv2)
+    values (#{relevanceId,jdbcType=INTEGER}, #{songId,jdbcType=INTEGER}, #{songlistId,jdbcType=INTEGER}, 
+      #{relevanceRsrv1,jdbcType=VARCHAR}, #{relevanceRsrv2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Relevance">
+    insert into relevance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="relevanceId != null">
+        relevance_id,
+      </if>
+      <if test="songId != null">
+        song_id,
+      </if>
+      <if test="songlistId != null">
+        songlist_id,
+      </if>
+      <if test="relevanceRsrv1 != null">
+        relevance_rsrv1,
+      </if>
+      <if test="relevanceRsrv2 != null">
+        relevance_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="relevanceId != null">
+        #{relevanceId,jdbcType=INTEGER},
+      </if>
+      <if test="songId != null">
+        #{songId,jdbcType=INTEGER},
+      </if>
+      <if test="songlistId != null">
+        #{songlistId,jdbcType=INTEGER},
+      </if>
+      <if test="relevanceRsrv1 != null">
+        #{relevanceRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="relevanceRsrv2 != null">
+        #{relevanceRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Relevance">
+    update relevance
+    <set>
+      <if test="songId != null">
+        song_id = #{songId,jdbcType=INTEGER},
+      </if>
+      <if test="songlistId != null">
+        songlist_id = #{songlistId,jdbcType=INTEGER},
+      </if>
+      <if test="relevanceRsrv1 != null">
+        relevance_rsrv1 = #{relevanceRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="relevanceRsrv2 != null">
+        relevance_rsrv2 = #{relevanceRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where relevance_id = #{relevanceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Relevance">
+    update relevance
+    set song_id = #{songId,jdbcType=INTEGER},
+      songlist_id = #{songlistId,jdbcType=INTEGER},
+      relevance_rsrv1 = #{relevanceRsrv1,jdbcType=VARCHAR},
+      relevance_rsrv2 = #{relevanceRsrv2,jdbcType=VARCHAR}
+    where relevance_id = #{relevanceId,jdbcType=INTEGER}
+  </update>
+</mapper>

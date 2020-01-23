@@ -1,0 +1,143 @@
+.mvList-ul{
+	margin-left: -50px;
+	list-style-type: none;
+}
+
+.mvStyle {
+	float:left;
+	margin: 15px;
+	position: relative;
+}
+
+.mvStyle a:hover{
+	text-decoration:none;
+	color:#66CC99;
+}
+.paly {
+	width:80px;
+	height:80px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-top:-70px;
+	margin-left: -40px;
+	border-radius:126px;
+	overflow:hidden;
+	display:none;
+}
+.avatar:hover .paly{
+	display: block;
+}
+/**ʵ����괥���Ŵ��� */
+
+.avatar {
+				display: block;
+				width: 250px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+.avatar .ava {
+				display: block;
+				border: 0;
+				width: 100%;
+				transform: scale(1);
+				transition: all 1s ease 0s;
+				-webkit-transform: scale(1);
+				-webkit-transform: all 1s ease 0s;
+			}
+			
+.avatar:hover .ava {
+				transform: scale(1.3);
+				transition: all 1s ease 0s;
+				-webkit-transform: scale(1.3);
+				-webkit-transform: all 1s ease 0s;
+			}
+			
+.m {
+		width: 960px;
+		height: 400px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 80px;
+		
+	}
+	.video-js .vjs-time-control {
+		display: block;
+	}
+	.video-js .vjs-remaining-time{display: none;}
+	.vjs-paused .vjs-big-play-button,
+	.vjs-paused.vjs-has-started .vjs-big-play-button {
+		display: block;
+	}			
+/**分页组件**/
+
+.fanye {
+    height: 60px;
+}
+
+.holder {
+    margin: 15px 0;
+}
+
+.holder span {
+    display: block;
+    width: 28px;
+    height: 32x;
+    line-height: 32px;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.holder a {
+    overflow: hidden;
+    display: block;
+    float: left;
+    padding: 0 17px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 3px;
+    vertical-align: middle;
+    border: 1px solid #DCDCDC;
+    color: #707070;
+    cursor: pointer;
+}
+
+.holder a:hover {
+    background-color: #8fc320;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.holder a.jp-previous {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+.holder a.jp-next {
+    margin-left: 15px;
+    margin-right: 0;
+}
+
+.holder a.jp-current,
+a.jp-current:hover {
+    background-color: #8fc320;
+    color: #FFF;
+    border-color: #8fc320;
+    font-weight: bold;
+}
+
+.holder a.jp-disabled,
+a.jp-disabled:hover {
+    background-color: #F6F6F6;
+    color: #D6D6D6;
+    cursor: default;
+}
+
+.holder a.jp-current,
+a.jp-current:hover {
+    background-color: none;
+}
+
+/****/

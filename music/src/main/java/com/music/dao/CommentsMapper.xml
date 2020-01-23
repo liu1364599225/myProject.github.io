@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Comments">
+    <id column="comments_id" jdbcType="INTEGER" property="commentsId" />
+    <result column="comments_time" jdbcType="DATE" property="commentsTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="song_id" jdbcType="INTEGER" property="songId" />
+    <result column="comments_rsrv1" jdbcType="VARCHAR" property="commentsRsrv1" />
+    <result column="comments_rsrv2" jdbcType="VARCHAR" property="commentsRsrv2" />
+  </resultMap>
+  
+  <resultMap id="UsersAndCommentsMap" type="com.music.entity.UsersAndComments">
+    <id column="comments_id" jdbcType="INTEGER" property="commentsId" />
+    <result column="comments_time" jdbcType="DATE" property="commentsTime" />
+    <result column="users_name" jdbcType="VARCHAR" property="usersName"/>
+    <result column="users_avatar" jdbcType="VARCHAR" property="usersAvatar"/>
+    <result column="song_id" jdbcType="INTEGER" property="songId" />
+    <result column="comments_content" jdbcType="LONGVARCHAR" property="commentsContent" />
+  </resultMap>
+  
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.music.entity.Comments">
+    <result column="comments_content" jdbcType="LONGVARCHAR" property="commentsContent" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    comments_id, comments_time, user_id, song_id, comments_rsrv1, comments_rsrv2
+  </sql>
+  <sql id="Blob_Column_List">
+    comments_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comments
+    where comments_id = #{commentsId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySongId" parameterType="java.lang.Integer" resultMap="UsersAndCommentsMap">
+    SELECT COMMENTS_ID,COMMENTS_CONTENT,COMMENTS_TIME,USERS_NAME,USERS_AVATAR,SONG_ID FROM COMMENTS C JOIN USERS U ON C.USER_ID = U.USERS_ID
+	WHERE C.SONG_ID = #{songId,jdbcType=INTEGER} ORDER BY C.COMMENTS_TIME DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comments
+    where comments_id = #{commentsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Comments">
+    insert into comments (comments_id, comments_time, user_id, 
+      song_id, comments_rsrv1, comments_rsrv2, 
+      comments_content)
+    values (#{commentsId,jdbcType=INTEGER}, #{commentsTime,jdbcType=DATE}, #{userId,jdbcType=INTEGER}, 
+      #{songId,jdbcType=INTEGER}, #{commentsRsrv1,jdbcType=VARCHAR}, #{commentsRsrv2,jdbcType=VARCHAR}, 
+      #{commentsContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Comments">
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentsId != null">
+        comments_id,
+      </if>
+      <if test="commentsTime != null">
+        comments_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="songId != null">
+        song_id,
+      </if>
+      <if test="commentsRsrv1 != null">
+        comments_rsrv1,
+      </if>
+      <if test="commentsRsrv2 != null">
+        comments_rsrv2,
+      </if>
+      <if test="commentsContent != null">
+        comments_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentsId != null">
+        #{commentsId,jdbcType=INTEGER},
+      </if>
+      <if test="commentsTime != null">
+        #{commentsTime,jdbcType=DATE},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="songId != null">
+        #{songId,jdbcType=INTEGER},
+      </if>
+      <if test="commentsRsrv1 != null">
+        #{commentsRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsRsrv2 != null">
+        #{commentsRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsContent != null">
+        #{commentsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Comments">
+    update comments
+    <set>
+      <if test="commentsTime != null">
+        comments_time = #{commentsTime,jdbcType=DATE},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="songId != null">
+        song_id = #{songId,jdbcType=INTEGER},
+      </if>
+      <if test="commentsRsrv1 != null">
+        comments_rsrv1 = #{commentsRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsRsrv2 != null">
+        comments_rsrv2 = #{commentsRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsContent != null">
+        comments_content = #{commentsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where comments_id = #{commentsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.music.entity.Comments">
+    update comments
+    set comments_time = #{commentsTime,jdbcType=DATE},
+      user_id = #{userId,jdbcType=INTEGER},
+      song_id = #{songId,jdbcType=INTEGER},
+      comments_rsrv1 = #{commentsRsrv1,jdbcType=VARCHAR},
+      comments_rsrv2 = #{commentsRsrv2,jdbcType=VARCHAR},
+      comments_content = #{commentsContent,jdbcType=LONGVARCHAR}
+    where comments_id = #{commentsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Comments">
+    update comments
+    set comments_time = #{commentsTime,jdbcType=DATE},
+      user_id = #{userId,jdbcType=INTEGER},
+      song_id = #{songId,jdbcType=INTEGER},
+      comments_rsrv1 = #{commentsRsrv1,jdbcType=VARCHAR},
+      comments_rsrv2 = #{commentsRsrv2,jdbcType=VARCHAR}
+    where comments_id = #{commentsId,jdbcType=INTEGER}
+  </update>
+</mapper>

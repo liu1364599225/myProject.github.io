@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.ViprecordsMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Viprecords">
+    <id column="viprecords_id" jdbcType="INTEGER" property="viprecordsId" />
+    <result column="viprecords_createtime" jdbcType="DATE" property="viprecordsCreatetime" />
+    <result column="viprecords_duration" jdbcType="VARCHAR" property="viprecordsDuration" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="viprecords_rsrv1" jdbcType="VARCHAR" property="viprecordsRsrv1" />
+    <result column="viprecords_rsrv2" jdbcType="VARCHAR" property="viprecordsRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    viprecords_id, viprecords_createtime, viprecords_duration, user_id, viprecords_rsrv1, 
+    viprecords_rsrv2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from viprecords
+    where viprecords_id = #{viprecordsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from viprecords
+    where viprecords_id = #{viprecordsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Viprecords">
+    insert into viprecords (viprecords_id, viprecords_createtime, 
+      viprecords_duration, user_id, viprecords_rsrv1, 
+      viprecords_rsrv2)
+    values (#{viprecordsId,jdbcType=INTEGER}, #{viprecordsCreatetime,jdbcType=DATE}, 
+      #{viprecordsDuration,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{viprecordsRsrv1,jdbcType=VARCHAR}, 
+      #{viprecordsRsrv2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Viprecords">
+    insert into viprecords
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="viprecordsId != null">
+        viprecords_id,
+      </if>
+      <if test="viprecordsCreatetime != null">
+        viprecords_createtime,
+      </if>
+      <if test="viprecordsDuration != null">
+        viprecords_duration,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="viprecordsRsrv1 != null">
+        viprecords_rsrv1,
+      </if>
+      <if test="viprecordsRsrv2 != null">
+        viprecords_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="viprecordsId != null">
+        #{viprecordsId,jdbcType=INTEGER},
+      </if>
+      <if test="viprecordsCreatetime != null">
+        #{viprecordsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="viprecordsDuration != null">
+        #{viprecordsDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="viprecordsRsrv1 != null">
+        #{viprecordsRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="viprecordsRsrv2 != null">
+        #{viprecordsRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Viprecords">
+    update viprecords
+    <set>
+      <if test="viprecordsCreatetime != null">
+        viprecords_createtime = #{viprecordsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="viprecordsDuration != null">
+        viprecords_duration = #{viprecordsDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="viprecordsRsrv1 != null">
+        viprecords_rsrv1 = #{viprecordsRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="viprecordsRsrv2 != null">
+        viprecords_rsrv2 = #{viprecordsRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where viprecords_id = #{viprecordsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Viprecords">
+    update viprecords
+    set viprecords_createtime = #{viprecordsCreatetime,jdbcType=DATE},
+      viprecords_duration = #{viprecordsDuration,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      viprecords_rsrv1 = #{viprecordsRsrv1,jdbcType=VARCHAR},
+      viprecords_rsrv2 = #{viprecordsRsrv2,jdbcType=VARCHAR}
+    where viprecords_id = #{viprecordsId,jdbcType=INTEGER}
+  </update>
+</mapper>

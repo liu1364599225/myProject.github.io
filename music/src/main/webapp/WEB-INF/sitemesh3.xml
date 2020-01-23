@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <!-- 排除，不进行装饰的路径 -->
+    
+    <mapping path="/pass/**" exclue="true"/>
+    <mapping path="/isLoginAndVip.lw" exclue="true"/>
+    <mapping path="/loginPage.lw" exclue="true"/>
+    <mapping path="/indexPage.lw" exclue="true"/>
+    <mapping path="/register.lw" exclue="true"/>
+    <mapping path="/login.lw" exclue="true"/>
+    <mapping path="/exit.lw" exclue="true"/>
+    
+  	<!-- 前端音乐布局 -->
+    <mapping>
+      <path>/*/*</path>
+      <path>/*.lw</path>
+      <path>/index</path>
+      <path>/</path>
+      <decorator>/WEB-INF/layouts/default.jsp</decorator>
+    </mapping>
+    
+   	
+    
+    <!-- 自定义 tag 规则 
+    <content-processor>
+      <tag-rule-bundle class="com.shop.tag.ExtHtmlTagRuleBundle" />
+    </content-processor>-->
+    
+</sitemesh>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.VipMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Vip">
+    <id column="vip_id" jdbcType="INTEGER" property="vipId" />
+    <result column="vip_createtime" jdbcType="DATE" property="vipCreatetime" />
+    <result column="vip_expirationtime" jdbcType="DATE" property="vipExpirationtime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="vip_rsrv1" jdbcType="VARCHAR" property="vipRsrv1" />
+    <result column="vip_rsrv2" jdbcType="VARCHAR" property="vipRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    vip_id, vip_createtime, vip_expirationtime, user_id, vip_rsrv1, vip_rsrv2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vip
+    where vip_id = #{vipId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from vip
+    where vip_id = #{vipId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Vip">
+    insert into vip (vip_id, vip_createtime, vip_expirationtime, 
+      user_id, vip_rsrv1, vip_rsrv2
+      )
+    values (#{vipId,jdbcType=INTEGER}, #{vipCreatetime,jdbcType=DATE}, #{vipExpirationtime,jdbcType=DATE}, 
+      #{userId,jdbcType=INTEGER}, #{vipRsrv1,jdbcType=VARCHAR}, #{vipRsrv2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Vip">
+    insert into vip
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vipId != null">
+        vip_id,
+      </if>
+      <if test="vipCreatetime != null">
+        vip_createtime,
+      </if>
+      <if test="vipExpirationtime != null">
+        vip_expirationtime,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="vipRsrv1 != null">
+        vip_rsrv1,
+      </if>
+      <if test="vipRsrv2 != null">
+        vip_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vipId != null">
+        #{vipId,jdbcType=INTEGER},
+      </if>
+      <if test="vipCreatetime != null">
+        #{vipCreatetime,jdbcType=DATE},
+      </if>
+      <if test="vipExpirationtime != null">
+        #{vipExpirationtime,jdbcType=DATE},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="vipRsrv1 != null">
+        #{vipRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="vipRsrv2 != null">
+        #{vipRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Vip">
+    update vip
+    <set>
+      <if test="vipCreatetime != null">
+        vip_createtime = #{vipCreatetime,jdbcType=DATE},
+      </if>
+      <if test="vipExpirationtime != null">
+        vip_expirationtime = #{vipExpirationtime,jdbcType=DATE},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="vipRsrv1 != null">
+        vip_rsrv1 = #{vipRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="vipRsrv2 != null">
+        vip_rsrv2 = #{vipRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vip_id = #{vipId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Vip">
+    update vip
+    set vip_createtime = #{vipCreatetime,jdbcType=DATE},
+      vip_expirationtime = #{vipExpirationtime,jdbcType=DATE},
+      user_id = #{userId,jdbcType=INTEGER},
+      vip_rsrv1 = #{vipRsrv1,jdbcType=VARCHAR},
+      vip_rsrv2 = #{vipRsrv2,jdbcType=VARCHAR}
+    where vip_id = #{vipId,jdbcType=INTEGER}
+  </update>
+</mapper>

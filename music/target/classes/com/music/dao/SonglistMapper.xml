@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.SonglistMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Songlist">
+    <id column="songlist_id" jdbcType="INTEGER" property="songlistId" />
+    <result column="songlist_name" jdbcType="VARCHAR" property="songlistName" />
+    <result column="songlist_priture" jdbcType="VARCHAR" property="songlistPriture" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="songlist_rsrv1" jdbcType="VARCHAR" property="songlistRsrv1" />
+    <result column="songlist_rsrv2" jdbcType="VARCHAR" property="songlistRsrv2" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.music.entity.Songlist">
+    <result column="songlist_sketch" jdbcType="LONGVARCHAR" property="songlistSketch" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    songlist_id, songlist_name, songlist_priture, user_id, songlist_rsrv1, songlist_rsrv2
+  </sql>
+  <sql id="Blob_Column_List">
+    songlist_sketch
+  </sql>
+  
+    <!-- 自定义结果Map    处理sql查询结果，对应 cn.shayne.entity.Actor-->
+	<resultMap type="com.music.entity.SonglistAndSong" id="songlistAndSongResultMap">
+			<!-- 数据库表主键  与  实体id属性  对应 -->
+		<id property="songlistId"  column="songlist_id"/>
+		<!-- 其它属性 -->
+		<result property="songlistName" column="songlist_name"/>
+		<result property="songlistPriture" column="songlist_priture"/>
+		<result property="userId" column="user_id"/>
+		<result property="songlistRsrv1" column="songlist_rsrv1"/>
+		<result property="songlistRsrv2" column="songlist_rsrv2"/>
+		<result property="songlistSketch" column="songlist_sketch"/>
+		<!-- 一对多关系映射 -->
+		<collection property="songList"  ofType="com.music.entity.SongAndSinger"> 
+			<!-- 数据库表主键  与  实体id属性  对应 -->
+			<id property="songId"  column="song_id"/>
+			<!-- 其它属性 -->
+			<result property="songName" column="song_name"/>	
+			<result property="songSongfile" column="song_songfile"/>	
+			<result property="songWordsfile" column="song_wordsfile"/>
+			<result property="songState" column="song_state"/>
+			<result property="songPricture" column="song_pricture"/>	
+			<result property="songVip" column="song_vip"/>	
+			<result property="songRsrv1" column="song_rsrv2"/>		
+			<result property="songRsrv2" column="song_rsrv2"/>	
+			<association property="singer"  javaType="com.music.entity.Singer">
+				<id property="singerId"  column="singer_id"/>
+				<!-- 其它属性 -->
+				<result property="singerName" column="singer_name"/>	
+				<result property="singerPicture" column="singer_picture"/>	
+				<result property="singerAddress" column="singer_address"/>
+				<result property="singerSketch" column="singer_sketch"/>
+				<result property="singerRsrv1" column="singer_rsrv1"/>
+				<result property="singerRsrv2" column="singer_rsrv2"/>		
+			</association>
+		</collection>
+	</resultMap>	
+	 <select id="selectAll"  resultMap="songlistAndSongResultMap">
+     select songlist.* ,song.song_Id, song.song_name,song.song_songfile,song.song_wordsfile,song.song_state,song.song_pricture,song.song_vip,song.song_rsrv1,song.song_rsrv2
+	,singer.singer_id,singer.singer_name,singer.singer_picture,singer.singer_rsrv1,singer.singer_rsrv2,singer.singer_sketch
+	from ((songlist left join relevance on  songlist.songlist_id = relevance.songlist_id ) left join song on  relevance.song_id=song.song_id) left join singer on song.singer_id =singer.singer_id</select>
+	
+  
+   <select id="selectById" parameterType="java.lang.Integer" resultMap="songlistAndSongResultMap">
+     select songlist.* ,song.song_Id, song.song_name,song.song_songfile,song.song_wordsfile,song.song_state,song.song_pricture,song.song_vip,song.song_rsrv1,song.song_rsrv2
+	,singer.singer_id,singer.singer_name,singer.singer_picture,singer.singer_rsrv1,singer.singer_rsrv2,singer.singer_sketch
+	from ((songlist left join relevance on  songlist.songlist_id = relevance.songlist_id ) left join song on  relevance.song_id=song.song_id) left join singer on song.singer_id =singer.singer_id
+	where songlist.songlist_id = #{songlistId,jdbcType=INTEGER}
+	</select>
+  
+  <select id="listAllByUserId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from songlist
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from songlist
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from songlist
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Songlist">
+    insert into songlist (songlist_id, songlist_name, songlist_priture, 
+      user_id, songlist_rsrv1, songlist_rsrv2, 
+      songlist_sketch)
+    values (#{songlistId,jdbcType=INTEGER}, #{songlistName,jdbcType=VARCHAR}, #{songlistPriture,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{songlistRsrv1,jdbcType=VARCHAR}, #{songlistRsrv2,jdbcType=VARCHAR}, 
+      #{songlistSketch,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Songlist">
+    insert into songlist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="songlistId != null">
+        songlist_id,
+      </if>
+      <if test="songlistName != null">
+        songlist_name,
+      </if>
+      <if test="songlistPriture != null">
+        songlist_priture,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="songlistRsrv1 != null">
+        songlist_rsrv1,
+      </if>
+      <if test="songlistRsrv2 != null">
+        songlist_rsrv2,
+      </if>
+      <if test="songlistSketch != null">
+        songlist_sketch,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="songlistId != null">
+        #{songlistId,jdbcType=INTEGER},
+      </if>
+      <if test="songlistName != null">
+        #{songlistName,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistPriture != null">
+        #{songlistPriture,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="songlistRsrv1 != null">
+        #{songlistRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistRsrv2 != null">
+        #{songlistRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistSketch != null">
+        #{songlistSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Songlist">
+    update songlist
+    <set>
+      <if test="songlistName != null">
+        songlist_name = #{songlistName,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistPriture != null">
+        songlist_priture = #{songlistPriture,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="songlistRsrv1 != null">
+        songlist_rsrv1 = #{songlistRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistRsrv2 != null">
+        songlist_rsrv2 = #{songlistRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="songlistSketch != null">
+        songlist_sketch = #{songlistSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.music.entity.Songlist">
+    update songlist
+    set songlist_name = #{songlistName,jdbcType=VARCHAR},
+      songlist_priture = #{songlistPriture,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      songlist_rsrv1 = #{songlistRsrv1,jdbcType=VARCHAR},
+      songlist_rsrv2 = #{songlistRsrv2,jdbcType=VARCHAR},
+      songlist_sketch = #{songlistSketch,jdbcType=LONGVARCHAR}
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Songlist">
+    update songlist
+    set songlist_name = #{songlistName,jdbcType=VARCHAR},
+      songlist_priture = #{songlistPriture,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      songlist_rsrv1 = #{songlistRsrv1,jdbcType=VARCHAR},
+      songlist_rsrv2 = #{songlistRsrv2,jdbcType=VARCHAR}
+    where songlist_id = #{songlistId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,97 @@
+.singerList-ul{
+	margin-left: -50px;
+	list-style-type: none;
+}
+
+.singerList-ul li{
+	margin-top: 50px;
+}
+
+.singerList-box{
+	width: 140px;
+	height: 140px;
+	border-radius: 126px;
+	overflow: hidden;
+	margin: auto;
+}
+
+.singerName{
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space:nowrap;
+	height: 28px;
+}
+
+/**分页组件**/
+
+.fanye {
+    height: 60px;
+}
+
+.holder {
+    margin: 15px 0;
+}
+
+.holder span {
+    display: block;
+    width: 28px;
+    height: 32x;
+    line-height: 32px;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.holder a {
+    overflow: hidden;
+    display: block;
+    float: left;
+    padding: 0 17px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 3px;
+    vertical-align: middle;
+    border: 1px solid #DCDCDC;
+    color: #707070;
+    cursor: pointer;
+}
+
+.holder a:hover {
+    background-color: #8fc320;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.holder a.jp-previous {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+.holder a.jp-next {
+    margin-left: 15px;
+    margin-right: 0;
+}
+
+.holder a.jp-current,
+a.jp-current:hover {
+    background-color: #8fc320;
+    color: #FFF;
+    border-color: #8fc320;
+    font-weight: bold;
+}
+
+.holder a.jp-disabled,
+a.jp-disabled:hover {
+    background-color: #F6F6F6;
+    color: #D6D6D6;
+    cursor: default;
+}
+
+.holder a.jp-current,
+a.jp-current:hover {
+    background-color: none;
+}
+
+/****/

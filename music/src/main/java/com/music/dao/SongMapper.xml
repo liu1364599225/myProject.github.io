@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.SongMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Song">
+    <id column="song_id" jdbcType="INTEGER" property="songId" />
+    <result column="song_name" jdbcType="VARCHAR" property="songName" />
+    <result column="song_songfile" jdbcType="VARCHAR" property="songSongfile" />
+    <result column="song_wordsfile" jdbcType="VARCHAR" property="songWordsfile" />
+    <result column="song_state" jdbcType="INTEGER" property="songState" />
+    <result column="song_pricture" jdbcType="VARCHAR" property="songPricture" />
+    <result column="song_vip" jdbcType="INTEGER" property="songVip" />
+    <result column="singer_id" jdbcType="INTEGER" property="singerId" />
+    <result column="songtype_id" jdbcType="INTEGER" property="songtypeId" />
+    <result column="mv_id" jdbcType="INTEGER" property="mvId" />
+    <result column="special_id" jdbcType="INTEGER" property="specialId" />
+    <result column="song_rsrv1" jdbcType="VARCHAR" property="songRsrv1" />
+    <result column="song_rsrv2" jdbcType="VARCHAR" property="songRsrv2" />
+  </resultMap>
+  
+  <resultMap id="SongDetailsMap" type="com.music.entity.SongDetails">
+    <id column="song_id" jdbcType="INTEGER" property="songId" />
+    <result column="song_name" jdbcType="VARCHAR" property="songName" />
+    <result column="song_songfile" jdbcType="VARCHAR" property="songSongfile" />
+    <result column="song_wordsfile" jdbcType="VARCHAR" property="songWordsfile" />
+    <result column="song_state" jdbcType="INTEGER" property="songState" />
+    <result column="song_pricture" jdbcType="VARCHAR" property="songPricture" />
+    <result column="song_vip" jdbcType="INTEGER" property="songVip" />
+    <result column="singer_name" jdbcType="VARCHAR" property="singerName" />
+    <result column="songtype_name" jdbcType="VARCHAR" property="songtypeName" />
+    <result column="mv_id" jdbcType="INTEGER" property="mvId" />
+    <result column="special_name" jdbcType="VARCHAR" property="specialName" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    song_id, song_name, song_songfile, song_wordsfile, song_state, song_pricture, song_vip, 
+    singer_id, songtype_id, mv_id, special_id, song_rsrv1, song_rsrv2
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from song
+    where song_id = #{songId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySingerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT * FROM SONG WHERE SINGER_ID = #{singerId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findBySpecialId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from song
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectDetails" parameterType="java.lang.Integer" resultMap="SongDetailsMap">
+    SELECT SONG_ID,SONG_NAME,SONG_SONGFILE,SONG_WORDSFILE,SONG_STATE,SONG_PRICTURE,SONG_VIP,SG.SINGER_NAME,ST.SONGTYPE_NAME,MV_ID,SP.SPECIAL_NAME
+	FROM SONG SO LEFT JOIN SINGER SG ON SO.SINGER_ID = SG.SINGER_ID LEFT JOIN SONGTYPE ST ON SO.SONGTYPE_ID = ST.SONGTYPE_ID LEFT JOIN SPECIAL SP
+	ON SO.SPECIAL_ID = SP.SPECIAL_ID WHERE SONG_ID = #{songId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from song
+    where song_id = #{songId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Song">
+    insert into song (song_id, song_name, song_songfile, 
+      song_wordsfile, song_state, song_pricture, 
+      song_vip, singer_id, songtype_id, 
+      mv_id, special_id, song_rsrv1, 
+      song_rsrv2)
+    values (#{songId,jdbcType=INTEGER}, #{songName,jdbcType=VARCHAR}, #{songSongfile,jdbcType=VARCHAR}, 
+      #{songWordsfile,jdbcType=VARCHAR}, #{songState,jdbcType=INTEGER}, #{songPricture,jdbcType=VARCHAR}, 
+      #{songVip,jdbcType=INTEGER}, #{singerId,jdbcType=INTEGER}, #{songtypeId,jdbcType=INTEGER}, 
+      #{mvId,jdbcType=INTEGER}, #{specialId,jdbcType=INTEGER}, #{songRsrv1,jdbcType=VARCHAR}, 
+      #{songRsrv2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Song">
+    insert into song
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="songId != null">
+        song_id,
+      </if>
+      <if test="songName != null">
+        song_name,
+      </if>
+      <if test="songSongfile != null">
+        song_songfile,
+      </if>
+      <if test="songWordsfile != null">
+        song_wordsfile,
+      </if>
+      <if test="songState != null">
+        song_state,
+      </if>
+      <if test="songPricture != null">
+        song_pricture,
+      </if>
+      <if test="songVip != null">
+        song_vip,
+      </if>
+      <if test="singerId != null">
+        singer_id,
+      </if>
+      <if test="songtypeId != null">
+        songtype_id,
+      </if>
+      <if test="mvId != null">
+        mv_id,
+      </if>
+      <if test="specialId != null">
+        special_id,
+      </if>
+      <if test="songRsrv1 != null">
+        song_rsrv1,
+      </if>
+      <if test="songRsrv2 != null">
+        song_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="songId != null">
+        #{songId,jdbcType=INTEGER},
+      </if>
+      <if test="songName != null">
+        #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="songSongfile != null">
+        #{songSongfile,jdbcType=VARCHAR},
+      </if>
+      <if test="songWordsfile != null">
+        #{songWordsfile,jdbcType=VARCHAR},
+      </if>
+      <if test="songState != null">
+        #{songState,jdbcType=INTEGER},
+      </if>
+      <if test="songPricture != null">
+        #{songPricture,jdbcType=VARCHAR},
+      </if>
+      <if test="songVip != null">
+        #{songVip,jdbcType=INTEGER},
+      </if>
+      <if test="singerId != null">
+        #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="songtypeId != null">
+        #{songtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="mvId != null">
+        #{mvId,jdbcType=INTEGER},
+      </if>
+      <if test="specialId != null">
+        #{specialId,jdbcType=INTEGER},
+      </if>
+      <if test="songRsrv1 != null">
+        #{songRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songRsrv2 != null">
+        #{songRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Song">
+    update song
+    <set>
+      <if test="songName != null">
+        song_name = #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="songSongfile != null">
+        song_songfile = #{songSongfile,jdbcType=VARCHAR},
+      </if>
+      <if test="songWordsfile != null">
+        song_wordsfile = #{songWordsfile,jdbcType=VARCHAR},
+      </if>
+      <if test="songState != null">
+        song_state = #{songState,jdbcType=INTEGER},
+      </if>
+      <if test="songPricture != null">
+        song_pricture = #{songPricture,jdbcType=VARCHAR},
+      </if>
+      <if test="songVip != null">
+        song_vip = #{songVip,jdbcType=INTEGER},
+      </if>
+      <if test="singerId != null">
+        singer_id = #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="songtypeId != null">
+        songtype_id = #{songtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="mvId != null">
+        mv_id = #{mvId,jdbcType=INTEGER},
+      </if>
+      <if test="specialId != null">
+        special_id = #{specialId,jdbcType=INTEGER},
+      </if>
+      <if test="songRsrv1 != null">
+        song_rsrv1 = #{songRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songRsrv2 != null">
+        song_rsrv2 = #{songRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where song_id = #{songId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Song">
+    update song
+    set song_name = #{songName,jdbcType=VARCHAR},
+      song_songfile = #{songSongfile,jdbcType=VARCHAR},
+      song_wordsfile = #{songWordsfile,jdbcType=VARCHAR},
+      song_state = #{songState,jdbcType=INTEGER},
+      song_pricture = #{songPricture,jdbcType=VARCHAR},
+      song_vip = #{songVip,jdbcType=INTEGER},
+      singer_id = #{singerId,jdbcType=INTEGER},
+      songtype_id = #{songtypeId,jdbcType=INTEGER},
+      mv_id = #{mvId,jdbcType=INTEGER},
+      special_id = #{specialId,jdbcType=INTEGER},
+      song_rsrv1 = #{songRsrv1,jdbcType=VARCHAR},
+      song_rsrv2 = #{songRsrv2,jdbcType=VARCHAR}
+    where song_id = #{songId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.SingerMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Singer">
+    <id column="singer_id" jdbcType="INTEGER" property="singerId" />
+    <result column="singer_name" jdbcType="VARCHAR" property="singerName" />
+    <result column="singer_picture" jdbcType="VARCHAR" property="singerPicture" />
+    <result column="singer_address" jdbcType="VARCHAR" property="singerAddress" />
+    <result column="singer_rsrv1" jdbcType="VARCHAR" property="singerRsrv1" />
+    <result column="singer_rsrv2" jdbcType="VARCHAR" property="singerRsrv2" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.music.entity.Singer">
+    <result column="singer_sketch" jdbcType="LONGVARCHAR" property="singerSketch" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    singer_id, singer_name, singer_picture, singer_address, singer_rsrv1, singer_rsrv2
+  </sql>
+  <sql id="Blob_Column_List">
+    singer_sketch
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from singer
+    where singer_id = #{singerId,jdbcType=INTEGER}
+  </select>
+  <select id="listByAll" resultMap="ResultMapWithBLOBs">
+  	select * from singer
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from singer
+    where singer_id = #{singerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Singer">
+    insert into singer (singer_id, singer_name, singer_picture, 
+      singer_address, singer_rsrv1, singer_rsrv2, 
+      singer_sketch)
+    values (#{singerId,jdbcType=INTEGER}, #{singerName,jdbcType=VARCHAR}, #{singerPicture,jdbcType=VARCHAR}, 
+      #{singerAddress,jdbcType=VARCHAR}, #{singerRsrv1,jdbcType=VARCHAR}, #{singerRsrv2,jdbcType=VARCHAR}, 
+      #{singerSketch,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Singer">
+    insert into singer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="singerId != null">
+        singer_id,
+      </if>
+      <if test="singerName != null">
+        singer_name,
+      </if>
+      <if test="singerPicture != null">
+        singer_picture,
+      </if>
+      <if test="singerAddress != null">
+        singer_address,
+      </if>
+      <if test="singerRsrv1 != null">
+        singer_rsrv1,
+      </if>
+      <if test="singerRsrv2 != null">
+        singer_rsrv2,
+      </if>
+      <if test="singerSketch != null">
+        singer_sketch,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="singerId != null">
+        #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="singerName != null">
+        #{singerName,jdbcType=VARCHAR},
+      </if>
+      <if test="singerPicture != null">
+        #{singerPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="singerAddress != null">
+        #{singerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="singerRsrv1 != null">
+        #{singerRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="singerRsrv2 != null">
+        #{singerRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="singerSketch != null">
+        #{singerSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Singer">
+    update singer
+    <set>
+      <if test="singerName != null">
+        singer_name = #{singerName,jdbcType=VARCHAR},
+      </if>
+      <if test="singerPicture != null">
+        singer_picture = #{singerPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="singerAddress != null">
+        singer_address = #{singerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="singerRsrv1 != null">
+        singer_rsrv1 = #{singerRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="singerRsrv2 != null">
+        singer_rsrv2 = #{singerRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="singerSketch != null">
+        singer_sketch = #{singerSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where singer_id = #{singerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.music.entity.Singer">
+    update singer
+    set singer_name = #{singerName,jdbcType=VARCHAR},
+      singer_picture = #{singerPicture,jdbcType=VARCHAR},
+      singer_address = #{singerAddress,jdbcType=VARCHAR},
+      singer_rsrv1 = #{singerRsrv1,jdbcType=VARCHAR},
+      singer_rsrv2 = #{singerRsrv2,jdbcType=VARCHAR},
+      singer_sketch = #{singerSketch,jdbcType=LONGVARCHAR}
+    where singer_id = #{singerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Singer">
+    update singer
+    set singer_name = #{singerName,jdbcType=VARCHAR},
+      singer_picture = #{singerPicture,jdbcType=VARCHAR},
+      singer_address = #{singerAddress,jdbcType=VARCHAR},
+      singer_rsrv1 = #{singerRsrv1,jdbcType=VARCHAR},
+      singer_rsrv2 = #{singerRsrv2,jdbcType=VARCHAR}
+    where singer_id = #{singerId,jdbcType=INTEGER}
+  </update>
+</mapper>

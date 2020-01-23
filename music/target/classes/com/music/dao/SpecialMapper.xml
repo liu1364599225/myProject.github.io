@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.SpecialMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Special">
+    <id column="special_id" jdbcType="INTEGER" property="specialId" />
+    <result column="special_name" jdbcType="VARCHAR" property="specialName" />
+    <result column="special_pricture" jdbcType="VARCHAR" property="specialPricture" />
+    <result column="singer_id" jdbcType="INTEGER" property="singerId" />
+    <result column="special_rsrv1" jdbcType="VARCHAR" property="specialRsrv1" />
+    <result column="special_rsrv2" jdbcType="VARCHAR" property="specialRsrv2" />
+    <result column="singer_name" jdbcType="VARCHAR" property="singerName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.music.entity.Special">
+    <result column="special_sketch" jdbcType="LONGVARCHAR" property="specialSketch" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    special_id, special_name, special_pricture, singer_id, special_rsrv1, special_rsrv2
+  </sql>
+  <sql id="Blob_Column_List">
+    special_sketch
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from special
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectSpecialAll" resultMap="ResultMapWithBLOBs">
+    select 
+    sp.special_id,
+     sp.special_name, 
+     sp.special_pricture,
+      sp.singer_id, 
+      sp.special_sketch,
+      s.singer_name
+    from special sp JOIN singer s ON sp.singer_id =s.singer_id
+  </select>
+  
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    sp.special_id,
+     sp.special_name, 
+     sp.special_pricture,
+      sp.singer_id, 
+      sp.special_sketch,
+      s.singer_name
+    from special sp JOIN singer s ON sp.singer_id =s.singer_id
+    and sp.special_id = #{specialId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from special
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Special">
+    insert into special (special_id, special_name, special_pricture, 
+      singer_id, special_rsrv1, special_rsrv2, 
+      special_sketch)
+    values (#{specialId,jdbcType=INTEGER}, #{specialName,jdbcType=VARCHAR}, #{specialPricture,jdbcType=VARCHAR}, 
+      #{singerId,jdbcType=INTEGER}, #{specialRsrv1,jdbcType=VARCHAR}, #{specialRsrv2,jdbcType=VARCHAR}, 
+      #{specialSketch,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Special">
+    insert into special
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specialId != null">
+        special_id,
+      </if>
+      <if test="specialName != null">
+        special_name,
+      </if>
+      <if test="specialPricture != null">
+        special_pricture,
+      </if>
+      <if test="singerId != null">
+        singer_id,
+      </if>
+      <if test="specialRsrv1 != null">
+        special_rsrv1,
+      </if>
+      <if test="specialRsrv2 != null">
+        special_rsrv2,
+      </if>
+      <if test="specialSketch != null">
+        special_sketch,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specialId != null">
+        #{specialId,jdbcType=INTEGER},
+      </if>
+      <if test="specialName != null">
+        #{specialName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialPricture != null">
+        #{specialPricture,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="specialRsrv1 != null">
+        #{specialRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="specialRsrv2 != null">
+        #{specialRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="specialSketch != null">
+        #{specialSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Special">
+    update special
+    <set>
+      <if test="specialName != null">
+        special_name = #{specialName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialPricture != null">
+        special_pricture = #{specialPricture,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        singer_id = #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="specialRsrv1 != null">
+        special_rsrv1 = #{specialRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="specialRsrv2 != null">
+        special_rsrv2 = #{specialRsrv2,jdbcType=VARCHAR},
+      </if>
+      <if test="specialSketch != null">
+        special_sketch = #{specialSketch,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.music.entity.Special">
+    update special
+    set special_name = #{specialName,jdbcType=VARCHAR},
+      special_pricture = #{specialPricture,jdbcType=VARCHAR},
+      singer_id = #{singerId,jdbcType=INTEGER},
+      special_rsrv1 = #{specialRsrv1,jdbcType=VARCHAR},
+      special_rsrv2 = #{specialRsrv2,jdbcType=VARCHAR},
+      special_sketch = #{specialSketch,jdbcType=LONGVARCHAR}
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Special">
+    update special
+    set special_name = #{specialName,jdbcType=VARCHAR},
+      special_pricture = #{specialPricture,jdbcType=VARCHAR},
+      singer_id = #{singerId,jdbcType=INTEGER},
+      special_rsrv1 = #{specialRsrv1,jdbcType=VARCHAR},
+      special_rsrv2 = #{specialRsrv2,jdbcType=VARCHAR}
+    where special_id = #{specialId,jdbcType=INTEGER}
+  </update>
+</mapper>

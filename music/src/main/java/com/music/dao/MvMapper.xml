@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.MvMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Mv">
+    <id column="mv_id" jdbcType="INTEGER" property="mvId" />
+    <result column="mv_name" jdbcType="VARCHAR" property="mvName" />
+    <result column="mv_priture" jdbcType="VARCHAR" property="mvPriture" />
+    <result column="mv_mvfile" jdbcType="VARCHAR" property="mvMvfile" />
+    <result column="singer_id" jdbcType="INTEGER" property="singerId" />
+    <result column="mv_rsrv1" jdbcType="VARCHAR" property="mvRsrv1" />
+    <result column="mv_rsrv2" jdbcType="VARCHAR" property="mvRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mv_id, mv_name, mv_priture, mv_mvfile, singer_id, mv_rsrv1, mv_rsrv2
+  </sql>
+  
+   <!-- 自定义结果Map    处理sql查询结果，对应 cn.shayne.entity.Actor-->
+	<resultMap type="com.music.entity.MvAndSinger" id="mvResultMap">
+			<!-- 数据库表主键  与  实体id属性  对应 -->
+		<id property="mvId"  column="mv_id"/>
+		<!-- 其它属性 -->
+		<result property="mvName" column="mv_name"/>
+		<result property="mvPriture" column="mv_priture"/>
+		<result property="mvMvfile" column="mv_mvfile"/>
+		<result property="mvRsrv1" column="mv_rsrv1"/>
+		<result property="mvRsrv2" column="mv_rsrv2"/>
+		<!-- 一对多关系映射 -->
+		<collection property="singer"  ofType="com.music.entity.Singer">
+			<!-- 数据库表主键  与  实体id属性  对应 -->
+			<id property="singerId"  column="singer_id"/>
+			<!-- 其它属性 -->
+			<result property="singerName" column="singer_name"/>	
+			<result property="singerPicture" column="singer_picture"/>	
+			<result property="singerAddress" column="singer_address"/>
+			<result property="singerRsrv1" column="singer_rsrv1"/>
+			<result property="singerRsrv2" column="singer_rsrv2"/>		
+		</collection>
+	</resultMap>	
+	 <select id="selectAll"  resultMap="mvResultMap">
+    select 
+    mv_name,mv_priture,mv_mvfile,mv_rsrv1,mv_rsrv2,mv_id,singer.singer_id, singer.singer_name,singer.singer_picture,singer.singer_address,singer.singer_rsrv1,singer.singer_rsrv2
+     from mv,singer where singer.singer_id = mv.singer_id
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mv
+    where mv_id = #{mvId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mv
+    where mv_id = #{mvId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Mv">
+    insert into mv (mv_id, mv_name, mv_priture, 
+      mv_mvfile, singer_id, mv_rsrv1, 
+      mv_rsrv2)
+    values (#{mvId,jdbcType=INTEGER}, #{mvName,jdbcType=VARCHAR}, #{mvPriture,jdbcType=VARCHAR}, 
+      #{mvMvfile,jdbcType=VARCHAR}, #{singerId,jdbcType=INTEGER}, #{mvRsrv1,jdbcType=VARCHAR}, 
+      #{mvRsrv2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Mv">
+    insert into mv
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mvId != null">
+        mv_id,
+      </if>
+      <if test="mvName != null">
+        mv_name,
+      </if>
+      <if test="mvPriture != null">
+        mv_priture,
+      </if>
+      <if test="mvMvfile != null">
+        mv_mvfile,
+      </if>
+      <if test="singerId != null">
+        singer_id,
+      </if>
+      <if test="mvRsrv1 != null">
+        mv_rsrv1,
+      </if>
+      <if test="mvRsrv2 != null">
+        mv_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mvId != null">
+        #{mvId,jdbcType=INTEGER},
+      </if>
+      <if test="mvName != null">
+        #{mvName,jdbcType=VARCHAR},
+      </if>
+      <if test="mvPriture != null">
+        #{mvPriture,jdbcType=VARCHAR},
+      </if>
+      <if test="mvMvfile != null">
+        #{mvMvfile,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="mvRsrv1 != null">
+        #{mvRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="mvRsrv2 != null">
+        #{mvRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Mv">
+    update mv
+    <set>
+      <if test="mvName != null">
+        mv_name = #{mvName,jdbcType=VARCHAR},
+      </if>
+      <if test="mvPriture != null">
+        mv_priture = #{mvPriture,jdbcType=VARCHAR},
+      </if>
+      <if test="mvMvfile != null">
+        mv_mvfile = #{mvMvfile,jdbcType=VARCHAR},
+      </if>
+      <if test="singerId != null">
+        singer_id = #{singerId,jdbcType=INTEGER},
+      </if>
+      <if test="mvRsrv1 != null">
+        mv_rsrv1 = #{mvRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="mvRsrv2 != null">
+        mv_rsrv2 = #{mvRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mv_id = #{mvId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Mv">
+    update mv
+    set mv_name = #{mvName,jdbcType=VARCHAR},
+      mv_priture = #{mvPriture,jdbcType=VARCHAR},
+      mv_mvfile = #{mvMvfile,jdbcType=VARCHAR},
+      singer_id = #{singerId,jdbcType=INTEGER},
+      mv_rsrv1 = #{mvRsrv1,jdbcType=VARCHAR},
+      mv_rsrv2 = #{mvRsrv2,jdbcType=VARCHAR}
+    where mv_id = #{mvId,jdbcType=INTEGER}
+  </update>
+</mapper>

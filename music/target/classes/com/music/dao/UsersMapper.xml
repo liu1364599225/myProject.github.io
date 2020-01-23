@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Users">
+    <id column="users_id" jdbcType="INTEGER" property="usersId" />
+    <result column="users_account" jdbcType="VARCHAR" property="usersAccount" />
+    <result column="users_password" jdbcType="VARCHAR" property="usersPassword" />
+    <result column="users_name" jdbcType="VARCHAR" property="usersName" />
+    <result column="users_sex" jdbcType="CHAR" property="usersSex" />
+    <result column="users_avatar" jdbcType="VARCHAR" property="usersAvatar" />
+    <result column="users_type" jdbcType="INTEGER" property="usersType" />
+    <result column="users_rsrv1" jdbcType="VARCHAR" property="usersRsrv1" />
+    <result column="users_rsrv2" jdbcType="VARCHAR" property="usersRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    users_id, users_account, users_password, users_name, users_sex, users_avatar, users_type, 
+    users_rsrv1, users_rsrv2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where users_id = #{usersId,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByUsername" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where users_account = #{usersAccount,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByUsernameAndPassword" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where users_account = #{0,jdbcType=VARCHAR} And users_password = #{1,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where users_id = #{usersId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Users">
+    insert into users (users_id, users_account, users_password, 
+      users_name, users_sex, users_avatar, 
+      users_type, users_rsrv1, users_rsrv2
+      )
+    values (#{usersId,jdbcType=INTEGER}, #{usersAccount,jdbcType=VARCHAR}, #{usersPassword,jdbcType=VARCHAR}, 
+      #{usersName,jdbcType=VARCHAR}, #{usersSex,jdbcType=CHAR}, #{usersAvatar,jdbcType=VARCHAR}, 
+      #{usersType,jdbcType=INTEGER}, #{usersRsrv1,jdbcType=VARCHAR}, #{usersRsrv2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Users">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        users_id,
+      </if>
+      <if test="usersAccount != null">
+        users_account,
+      </if>
+      <if test="usersPassword != null">
+        users_password,
+      </if>
+      <if test="usersName != null">
+        users_name,
+      </if>
+      <if test="usersSex != null">
+        users_sex,
+      </if>
+      <if test="usersAvatar != null">
+        users_avatar,
+      </if>
+      <if test="usersType != null">
+        users_type,
+      </if>
+      <if test="usersRsrv1 != null">
+        users_rsrv1,
+      </if>
+      <if test="usersRsrv2 != null">
+        users_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usersId != null">
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="usersAccount != null">
+        #{usersAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="usersPassword != null">
+        #{usersPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersName != null">
+        #{usersName,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSex != null">
+        #{usersSex,jdbcType=CHAR},
+      </if>
+      <if test="usersAvatar != null">
+        #{usersAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="usersType != null">
+        #{usersType,jdbcType=INTEGER},
+      </if>
+      <if test="usersRsrv1 != null">
+        #{usersRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRsrv2 != null">
+        #{usersRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Users">
+    update users
+    <set>
+      <if test="usersAccount != null">
+        users_account = #{usersAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="usersPassword != null">
+        users_password = #{usersPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersName != null">
+        users_name = #{usersName,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSex != null">
+        users_sex = #{usersSex,jdbcType=CHAR},
+      </if>
+      <if test="usersAvatar != null">
+        users_avatar = #{usersAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="usersType != null">
+        users_type = #{usersType,jdbcType=INTEGER},
+      </if>
+      <if test="usersRsrv1 != null">
+        users_rsrv1 = #{usersRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="usersRsrv2 != null">
+        users_rsrv2 = #{usersRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where users_id = #{usersId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Users">
+    update users
+    set users_account = #{usersAccount,jdbcType=VARCHAR},
+      users_password = #{usersPassword,jdbcType=VARCHAR},
+      users_name = #{usersName,jdbcType=VARCHAR},
+      users_sex = #{usersSex,jdbcType=CHAR},
+      users_avatar = #{usersAvatar,jdbcType=VARCHAR},
+      users_type = #{usersType,jdbcType=INTEGER},
+      users_rsrv1 = #{usersRsrv1,jdbcType=VARCHAR},
+      users_rsrv2 = #{usersRsrv2,jdbcType=VARCHAR}
+    where users_id = #{usersId,jdbcType=INTEGER}
+  </update>
+</mapper>

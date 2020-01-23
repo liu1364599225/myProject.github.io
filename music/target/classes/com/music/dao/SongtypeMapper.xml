@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.music.dao.SongtypeMapper">
+  <resultMap id="BaseResultMap" type="com.music.entity.Songtype">
+    <id column="songtype_id" jdbcType="INTEGER" property="songtypeId" />
+    <result column="songtype_name" jdbcType="VARCHAR" property="songtypeName" />
+    <result column="songtype_rsrv1" jdbcType="VARCHAR" property="songtypeRsrv1" />
+    <result column="songtype_rsrv2" jdbcType="VARCHAR" property="songtypeRsrv2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    songtype_id, songtype_name, songtype_rsrv1, songtype_rsrv2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from songtype
+    where songtype_id = #{songtypeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from songtype
+    where songtype_id = #{songtypeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.music.entity.Songtype">
+    insert into songtype (songtype_id, songtype_name, songtype_rsrv1, 
+      songtype_rsrv2)
+    values (#{songtypeId,jdbcType=INTEGER}, #{songtypeName,jdbcType=VARCHAR}, #{songtypeRsrv1,jdbcType=VARCHAR}, 
+      #{songtypeRsrv2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.music.entity.Songtype">
+    insert into songtype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="songtypeId != null">
+        songtype_id,
+      </if>
+      <if test="songtypeName != null">
+        songtype_name,
+      </if>
+      <if test="songtypeRsrv1 != null">
+        songtype_rsrv1,
+      </if>
+      <if test="songtypeRsrv2 != null">
+        songtype_rsrv2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="songtypeId != null">
+        #{songtypeId,jdbcType=INTEGER},
+      </if>
+      <if test="songtypeName != null">
+        #{songtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="songtypeRsrv1 != null">
+        #{songtypeRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songtypeRsrv2 != null">
+        #{songtypeRsrv2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.music.entity.Songtype">
+    update songtype
+    <set>
+      <if test="songtypeName != null">
+        songtype_name = #{songtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="songtypeRsrv1 != null">
+        songtype_rsrv1 = #{songtypeRsrv1,jdbcType=VARCHAR},
+      </if>
+      <if test="songtypeRsrv2 != null">
+        songtype_rsrv2 = #{songtypeRsrv2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where songtype_id = #{songtypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.music.entity.Songtype">
+    update songtype
+    set songtype_name = #{songtypeName,jdbcType=VARCHAR},
+      songtype_rsrv1 = #{songtypeRsrv1,jdbcType=VARCHAR},
+      songtype_rsrv2 = #{songtypeRsrv2,jdbcType=VARCHAR}
+    where songtype_id = #{songtypeId,jdbcType=INTEGER}
+  </update>
+</mapper>
